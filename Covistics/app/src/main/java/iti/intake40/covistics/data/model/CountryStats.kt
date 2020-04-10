@@ -31,4 +31,10 @@ data class CountryStats(
     @Expose
     @SerializedName("total_cases_per_1m_population")
     var totalCasesPer1mPopulation: Int
-)
+) {
+    companion object {
+        fun getCountryStatsList(): List<CountryStats> {
+            TODO()
+        }
+    }
+}
