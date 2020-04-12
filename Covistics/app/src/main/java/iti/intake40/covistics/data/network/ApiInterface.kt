@@ -1,5 +1,6 @@
 package iti.intake40.covistics.data.network
 
+import androidx.lifecycle.LiveData
 import iti.intake40.covistics.data.model.CountryStats
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,5 +15,5 @@ interface ApiInterface {
         "x-rapidapi-key: 45f01e3e9amsh28536b59fa24c6ep17d3c2jsnbf582a165bdf"
     )
     @GET("coronavirus/cases_by_country.php")
-    fun getAllCountryStats(): Call<List<CountryStats>>
+    fun getAllCountryStats(): Call<CountryStats>
 }

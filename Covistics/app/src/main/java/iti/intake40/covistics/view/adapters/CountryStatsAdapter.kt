@@ -1,17 +1,15 @@
 package iti.intake40.covistics.view.adapters
 
-import android.service.autofill.Dataset
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import iti.intake40.covistics.R
 import iti.intake40.covistics.data.model.CountryStats
+import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
 
-class CountryStatsAdapter(var dataset: List<CountryStats>) :
+class CountryStatsAdapter(var dataset: List<SingleCountryStats>) :
     RecyclerView.Adapter<CountryStatsAdapter.ViewHolder>() {
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
@@ -26,8 +24,8 @@ class CountryStatsAdapter(var dataset: List<CountryStats>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.country_tv.text = dataset.get(position).countryName
-        holder.itemView.confirmed_tv.text = dataset.get(position).activeCases.toString()
-        holder.itemView.recovered_tv.text = dataset.get(position).totalRecovered.toString()
-        holder.itemView.deaths_tv.text = dataset.get(position).deaths.toString()
+        holder.itemView.confirmed_tv.text = dataset.get(position).activeCases
+        holder.itemView.recovered_tv.text = dataset.get(position).totalRecovered
+        holder.itemView.deaths_tv.text = dataset.get(position).deaths
     }
 }
