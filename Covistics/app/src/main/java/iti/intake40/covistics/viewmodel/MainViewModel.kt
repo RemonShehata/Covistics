@@ -26,9 +26,4 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getAllCountryStats() = repository.getCountriesData()
 
-    fun saveToDatabase(countries: List<SingleCountryStats>) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.insert(countries)
-        }
-
 }

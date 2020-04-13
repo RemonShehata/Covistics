@@ -28,11 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getAllCountryStats().observe(this, Observer { obj ->
             // update UI
-
             countryStatsList.addAll(obj)
-            //(recycler_view.adapter as CountryStatsAdapter).notifyDataSetChanged()
-            data.value = countryStatsList
+            //data.value = countryStatsList.distinct()
             recycler_view.adapter = CountryStatsAdapter(countryStatsList)
+            Log.d(TAG, countryStatsList.toString())
         })
 
     }

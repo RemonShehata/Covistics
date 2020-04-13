@@ -10,7 +10,7 @@ import iti.intake40.covistics.data.model.SingleCountryStats
 @Dao
 interface CountryDAO {
 
-    @Query("SELECT * from  country_table ORDER BY cases DESC")
+    @Query("SELECT * FROM country_table order by cast(replace(cases, ',', '') as int) DESC")
     fun getAllCountries(): LiveData<List<SingleCountryStats>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
