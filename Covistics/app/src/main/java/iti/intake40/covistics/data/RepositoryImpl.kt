@@ -30,6 +30,7 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
             ) {
 
                 liveCountryStats.postValue(response.body()?.countriesStat)
+                //add to database
                 response.body()?.countriesStat?.let { insert(it) }
             }
 
@@ -45,10 +46,10 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
 
     override fun getCountriesData(): LiveData<List<SingleCountryStats>> {
         if (isConnected()) {
-            getDataFromAPI()
+            return getDataFromAPI()
+        } else {
+            return getDataFromDatabase()
         }
-
-        return getDataFromDatabase()
     }
 
     fun isConnected(): Boolean {
