@@ -1,6 +1,5 @@
 package iti.intake40.covistics.data.network
 
-import androidx.lifecycle.LiveData
 import iti.intake40.covistics.data.model.CountryStats
 import retrofit2.Call
 import retrofit2.http.GET

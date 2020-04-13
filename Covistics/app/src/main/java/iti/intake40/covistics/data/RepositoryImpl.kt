@@ -9,7 +9,6 @@ import iti.intake40.covistics.data.network.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 class RepositoryImpl : Repository {
     private val TAG = "RepositoryImpl"

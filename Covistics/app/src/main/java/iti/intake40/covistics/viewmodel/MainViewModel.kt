@@ -9,6 +9,7 @@ class MainViewModel : ViewModel() {
     init {
 
     }
+
     private val repository = RepositoryImpl()
     val liveCountryStats = MutableLiveData<List<CountryStats>>()
 

@@ -5,10 +5,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
 import iti.intake40.covistics.view.adapters.CountryStatsAdapter
 import iti.intake40.covistics.viewmodel.MainViewModel
