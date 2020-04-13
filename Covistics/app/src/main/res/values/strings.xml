@@ -5,4 +5,9 @@
     <string name="confirmed">Confirmed</string>
     <string name="recovered">Recovered</string>
     <string name="deaths">Deaths</string>
+    <string name="new_cases">New Cases</string>
+    <string name="confirmed_cases">Confirmed Cases</string>
+    <string name="recovered_cases">Recovered Cases</string>
+    <string name="death_cases">Death Cases</string>
+    <string name="subscribe">Subscribe</string>
 </resources>
