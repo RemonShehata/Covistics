@@ -23,7 +23,7 @@ class CountryStatsAdapter(var dataset: List<SingleCountryStats>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.country_tv.text = dataset.get(position).countryName
-        holder.itemView.confirmed_tv.text = dataset.get(position).activeCases
+        holder.itemView.confirmed_tv.text = dataset.get(position).cases
         holder.itemView.recovered_tv.text = dataset.get(position).totalRecovered
         holder.itemView.deaths_tv.text = dataset.get(position).deaths
     }

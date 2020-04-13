@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             recycler_view.adapter = CountryStatsAdapter(countryStatsList)
         })
 
-        Log.d(TAG, "list/n" + countryStatsList.toString())
     }
 
 }

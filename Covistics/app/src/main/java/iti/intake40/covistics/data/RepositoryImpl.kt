@@ -1,19 +1,25 @@
 package iti.intake40.covistics.data
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
 import iti.intake40.covistics.data.network.ApiClient
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RepositoryImpl : Repository {
+class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
+
     private val TAG = "RepositoryImpl"
 
-    override fun getSavedCountryStats(): LiveData<List<SingleCountryStats>> {
+    override fun getDataFromAPI(): LiveData<List<SingleCountryStats>> {
         val liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
         val call = ApiClient.getClient.getAllCountryStats()
 
@@ -22,15 +28,9 @@ class RepositoryImpl : Repository {
                 call: Call<CountryStats>,
                 response: Response<CountryStats>
             ) {
-                //response.body()?.let { countryStatsList.addAll(it) }
-                //countryStatsList.addAll(response!!.body()!!)
-                liveCountryStats.postValue(response.body()?.countriesStat)
-                response.body()?.countriesStat
 
-                print("------")
-                Log.d(TAG, response.body()?.countriesStat?.size.toString())
-                Log.d(TAG, response.body()?.countriesStat.toString())
-                //Log.d(TAG, response.toString())
+                liveCountryStats.postValue(response.body()?.countriesStat)
+                response.body()?.countriesStat?.let { insert(it) }
             }
 
             override fun onFailure(call: Call<CountryStats>, t: Throwable) {
@@ -39,5 +39,27 @@ class RepositoryImpl : Repository {
         })
         Log.d(TAG, liveCountryStats.toString())
         return liveCountryStats
+    }
+
+    override fun getDataFromDatabase() = dao.getAllCountries()
+
+    override fun getCountriesData(): LiveData<List<SingleCountryStats>> {
+        if (isConnected()) {
+            getDataFromAPI()
+        }
+
+        return getDataFromDatabase()
+    }
+
+    fun isConnected(): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        return isConnected
+    }
+
+    fun insert(countries: List<SingleCountryStats>) = runBlocking {
+        dao.insertAll(countries)
     }
 }
