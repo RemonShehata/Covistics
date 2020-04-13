@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/cardview_default_elevation"
+    app:cardCornerRadius="@dimen/cardview_default_radius">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        android:weightSum="8">
+        android:weightSum="5">
 
         <ImageView
             android:id="@+id/flag_iv"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="25dp"
-            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_weight=".5"
+            app:srcCompat="@drawable/ic_egypt_flag"
             tools:srcCompat="@drawable/ic_egypt_flag" />
 
         <TextView
             android:id="@+id/country_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
+            android:ellipsize="none"
+            android:maxLines="2"
+            android:scrollHorizontally="false"
             tools:text="@string/egypt" />
 
         <TextView
             android:id="@+id/confirmed_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="1794" />
+            tools:text="1794"
+            android:layout_marginStart="8dp"/>
 
         <TextView
             android:id="@+id/recovered_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_weight="1"
             tools:text="384" />
 
         <TextView
             android:id="@+id/deaths_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_weight="1"
             tools:text="135" />
 
         <ImageView
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="25dp"
-            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:layout_weight=".5"
+            app:srcCompat="@drawable/ic_info"
             tools:srcCompat="@drawable/ic_info" />
 
     </LinearLayout>

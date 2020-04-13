@@ -11,7 +11,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="horizontal"
+        android:weightSum="8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,7 +23,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_weight="4"
+            android:text="@string/location"
             tools:layout_editor_absoluteX="21dp"
             tools:layout_editor_absoluteY="144dp" />
 
@@ -28,7 +32,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_weight="1"
+            android:text="@string/confirmed"
             tools:layout_editor_absoluteX="97dp"
             tools:layout_editor_absoluteY="144dp" />
 
@@ -36,7 +41,8 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_weight="1"
+            android:text="@string/recovered"
             tools:layout_editor_absoluteX="174dp"
             tools:layout_editor_absoluteY="145dp" />
 
@@ -44,7 +50,8 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_weight="1"
+            android:text="@string/deaths"
             tools:layout_editor_absoluteX="261dp"
             tools:layout_editor_absoluteY="144dp" />
 
@@ -52,11 +59,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="403dp"
-        android:layout_height="691dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
