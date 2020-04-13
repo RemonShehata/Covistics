@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             // update UI
             countryStatsList.addAll(obj)
             //data.value = countryStatsList.distinct()
-            recycler_view.adapter = CountryStatsAdapter(countryStatsList)
+            recycler_view.adapter = CountryStatsAdapter(countryStatsList.sortedByDescending { it.cases.replace(",","").toInt() })
             Log.d(TAG, countryStatsList.toString())
         })
 

@@ -78,4 +78,7 @@ dependencies {
     // Testing
     testImplementation 'junit:junit:4.13'
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+
+    //Work manager
+    implementation "androidx.work:work-runtime-ktx:2.3.4"
 }
