@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
@@ -18,9 +17,10 @@ import retrofit2.Response
 class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
 
     private val TAG = "RepositoryImpl"
+    val liveData: MutableLiveData<List<SingleCountryStats>> =
+        MutableLiveData<List<SingleCountryStats>>()
 
-    override fun getDataFromAPI(): LiveData<List<SingleCountryStats>> {
-        val liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
+    override fun getDataFromAPI() {
         val call = ApiClient.getClient.getAllCountryStats()
 
         call.enqueue(object : Callback<CountryStats> {
@@ -28,9 +28,9 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
                 call: Call<CountryStats>,
                 response: Response<CountryStats>
             ) {
-
-                liveCountryStats.postValue(response.body()?.countriesStat)
-                //add to database
+                //add the list from api to my list
+                liveData.postValue(response.body()?.countriesStat)
+                //insert api results in sqllite
                 response.body()?.countriesStat?.let { insert(it) }
             }
 
@@ -38,26 +38,29 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
                 Log.e(TAG, t.toString())
             }
         })
-        Log.d(TAG, liveCountryStats.toString())
-        return liveCountryStats
+
     }
 
-    override fun getDataFromDatabase() = dao.getAllCountries()
+    override fun getDataFromDatabase() {
+        val l: List<SingleCountryStats>? = dao.getAllCountries().value
+        liveData.postValue(l)
+    }
 
-    override fun getCountriesData(): LiveData<List<SingleCountryStats>> {
+
+    override fun getCountriesData() {
         if (isConnected()) {
-            return getDataFromAPI()
+            getDataFromAPI()
         } else {
-            return getDataFromDatabase()
+            getDataFromDatabase()
         }
     }
+
 
     fun isConnected(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
-
-        return isConnected
+        val status: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        return status
     }
 
     fun insert(countries: List<SingleCountryStats>) = runBlocking {

@@ -8,8 +8,10 @@ import iti.intake40.covistics.R
 import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
 
-class CountryStatsAdapter(var dataset: List<SingleCountryStats>) :
+class CountryStatsAdapter() :
     RecyclerView.Adapter<CountryStatsAdapter.ViewHolder>() {
+
+    var countriesList: List<SingleCountryStats> = ArrayList()
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
 
@@ -19,12 +21,17 @@ class CountryStatsAdapter(var dataset: List<SingleCountryStats>) :
         return ViewHolder(view)
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = countriesList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.country_tv.text = dataset.get(position).countryName
-        holder.itemView.confirmed_tv.text = dataset.get(position).cases
-        holder.itemView.recovered_tv.text = dataset.get(position).totalRecovered
-        holder.itemView.deaths_tv.text = dataset.get(position).deaths
+        holder.itemView.country_tv.text = countriesList.get(position).countryName
+        holder.itemView.confirmed_tv.text = countriesList.get(position).cases
+        holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
+        holder.itemView.deaths_tv.text = countriesList.get(position).deaths
+    }
+
+    fun setCountryData(data: List<SingleCountryStats>) {
+        this.countriesList = data
+        notifyDataSetChanged()
     }
 }

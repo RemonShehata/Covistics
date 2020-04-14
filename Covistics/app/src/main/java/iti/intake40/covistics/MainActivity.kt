@@ -24,19 +24,19 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val countryStatsList = ArrayList<SingleCountryStats>()
         recycler_view.layoutManager = LinearLayoutManager(applicationContext)
-
-
-        viewModel.getAllCountryStats().observe(this, Observer { obj ->
+        val adapter = CountryStatsAdapter()
+        recycler_view.adapter = adapter
+        viewModel.getAllCountryStats(this)
+        viewModel.liveCountryStats.observe(this, Observer {
             // update UI
-            countryStatsList.addAll(obj)
-            //data.value = countryStatsList.distinct()
-
-            recycler_view.adapter = CountryStatsAdapter(countryStatsList.sortedByDescending {
-                it.cases.replace(",", "").toInt()
-            })
-            Log.d(TAG, countryStatsList.toString())
+            //TODo sort here
+            adapter.setCountryData(it)
+            Log.d(TAG, it.toString())
+            Log.d(TAG, viewModel.liveCountryStats.value.toString())
         })
+
 
     }
 
 }
+
