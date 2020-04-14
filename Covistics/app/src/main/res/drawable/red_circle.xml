@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid android:color="@color/circleBg" />
+
+    <size
+        android:width="@dimen/circle_diemn"
+        android:height="@dimen/circle_diemn" />
+    <stroke
+        android:width="@dimen/stroke_width"
+        android:color="@color/redCircle" />
+
+</shape>

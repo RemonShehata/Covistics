@@ -26,6 +26,7 @@ class CountryStatsAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.country_tv.text = countriesList.get(position).countryName
         holder.itemView.confirmed_tv.text = countriesList.get(position).cases
+        holder.itemView.new_cases_tv.text = countriesList.get(position).newCases
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
     }

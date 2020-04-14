@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="circle_diemn">75dp</dimen>
+    <dimen name="stroke_width">10dp</dimen>
+    <dimen name="circle_font"></dimen>
+</resources>
