@@ -14,19 +14,18 @@ import iti.intake40.covistics.data.model.SingleCountryStats
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
-    private val repository: RepositoryImpl
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
 
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
-        repository = RepositoryImpl(dao, getApplication())
+        RepositoryImpl.init(dao,getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
     }
 
     fun getAllCountryStats(lifecycleOwner: LifecycleOwner) {
-        repository.liveData.observe(lifecycleOwner, Observer {
+        RepositoryImpl.liveData.observe(lifecycleOwner, Observer {
             liveCountryStats.postValue(it)
         })
-        repository.getCountriesData(lifecycleOwner)
+        RepositoryImpl.getCountriesData(lifecycleOwner)
     }
 }

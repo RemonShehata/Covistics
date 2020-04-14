@@ -16,11 +16,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
+object RepositoryImpl :Repository{
 
     private val TAG = "RepositoryImpl"
+    private lateinit var dao : CountryDAO
+    private lateinit var context : Context
     val liveData: MutableLiveData<List<SingleCountryStats>> =
         MutableLiveData<List<SingleCountryStats>>()
+
+     fun init(dao:CountryDAO,context: Context){
+        this.dao = dao
+        this.context = context
+    }
 
     override fun getDataFromAPI() {
         val call = ApiClient.getClient.getAllCountryStats()
@@ -53,7 +60,6 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
 //        liveData.postValue(l)
     }
 
-
     override fun getCountriesData(lifecycleOwner: LifecycleOwner) {
         if (isConnected()) {
             getDataFromAPI()
@@ -61,7 +67,6 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
             getDataFromDatabase(lifecycleOwner)
         }
     }
-
 
     fun isConnected(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
