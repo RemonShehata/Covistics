@@ -1,6 +1,7 @@
 package iti.intake40.covistics.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -26,7 +27,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repository.liveData.observe(lifecycleOwner, Observer {
             liveCountryStats.postValue(it)
         })
-        repository.getCountriesData()
+        repository.getCountriesData(lifecycleOwner)
     }
-
 }

@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
@@ -41,17 +43,22 @@ class RepositoryImpl(val dao: CountryDAO, val context: Context) : Repository {
 
     }
 
-    override fun getDataFromDatabase() {
-        val l: List<SingleCountryStats>? = dao.getAllCountries().value
-        liveData.postValue(l)
+    override fun getDataFromDatabase(lifecycleOwner: LifecycleOwner) {
+        dao.getAllCountries().observe(lifecycleOwner, Observer {
+            Log.d(TAG,it.toString())
+            liveData.postValue(it)
+        })
+//        liveData = dao.getAllCountries()
+//        val l: List<SingleCountryStats>? = dao.getAllCountries()
+//        liveData.postValue(l)
     }
 
 
-    override fun getCountriesData() {
+    override fun getCountriesData(lifecycleOwner: LifecycleOwner) {
         if (isConnected()) {
             getDataFromAPI()
         } else {
-            getDataFromDatabase()
+            getDataFromDatabase(lifecycleOwner)
         }
     }
 
