@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import iti.intake40.covistics.R
 import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
@@ -29,6 +30,14 @@ class CountryStatsAdapter() :
         holder.itemView.new_cases_tv.text = countriesList.get(position).newCases
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
+        //val countryCode = CountryCodes.getCode(countriesList.get(position).countryName)
+        val flagUrl = "https://www.countryflags.io/".plus("us").plus("/shiny/64.png")
+        Glide.with(holder.itemView)
+            .load(flagUrl)
+            .centerCrop()
+            .placeholder(R.drawable.ic_egypt_flag)
+            .into(holder.itemView.flag_iv)
+
     }
 
     fun setCountryData(data: List<SingleCountryStats>) {
