@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = CountryStatsAdapter()
         recycler_view.adapter = adapter
         viewModel.getAllCountryStats(this)
+        viewModel.getSubscribedCountryStat(this)
         viewModel.liveCountryStats.observe(this, Observer {
             // update UI
             //TODo sort here

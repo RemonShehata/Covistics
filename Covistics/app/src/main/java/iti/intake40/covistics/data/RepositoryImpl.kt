@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
+import iti.intake40.covistics.data.model.SubscribedCountryData
+import iti.intake40.covistics.data.model.SubscribedCountryStat
 import iti.intake40.covistics.data.network.ApiClient
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -21,8 +23,9 @@ object RepositoryImpl :Repository{
     private val TAG = "RepositoryImpl"
     private lateinit var dao : CountryDAO
     private lateinit var context : Context
-    val liveData: MutableLiveData<List<SingleCountryStats>> =
+    val liveSingleCountriesStatData: MutableLiveData<List<SingleCountryStats>> =
         MutableLiveData<List<SingleCountryStats>>()
+    val liveSubscribedCountryData : MutableLiveData<SubscribedCountryData> = MutableLiveData<SubscribedCountryData>()
 
      fun init(dao:CountryDAO,context: Context){
         this.dao = dao
@@ -38,7 +41,7 @@ object RepositoryImpl :Repository{
                 response: Response<CountryStats>
             ) {
                 //add the list from api to my list
-                liveData.postValue(response.body()?.countriesStat)
+                liveSingleCountriesStatData.postValue(response.body()?.countriesStat)
                 //insert api results in sqllite
                 response.body()?.countriesStat?.let { insert(it) }
             }
@@ -50,10 +53,26 @@ object RepositoryImpl :Repository{
 
     }
 
+    override fun getSubscribedCountryDataFromAPI(){
+        val call = ApiClient.getClient.getSubscribedCountryStat("Egypt")
+        call.enqueue(object :Callback<SubscribedCountryStat>{
+            override fun onResponse(
+                call: Call<SubscribedCountryStat>,
+                response: Response<SubscribedCountryStat>
+            ) {
+               liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
+            }
+
+            override fun onFailure(call: Call<SubscribedCountryStat>, t: Throwable) {
+                Log.e(TAG,t.toString())
+            }
+        })
+    }
+
     override fun getDataFromDatabase(lifecycleOwner: LifecycleOwner) {
         dao.getAllCountries().observe(lifecycleOwner, Observer {
             Log.d(TAG,it.toString())
-            liveData.postValue(it)
+            liveSingleCountriesStatData.postValue(it)
         })
 //        liveData = dao.getAllCountries()
 //        val l: List<SingleCountryStats>? = dao.getAllCountries()
