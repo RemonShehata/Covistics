@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="circle_font">
+        <item name="fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/circle_font</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>
