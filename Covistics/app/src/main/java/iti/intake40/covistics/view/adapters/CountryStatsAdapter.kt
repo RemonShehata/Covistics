@@ -1,5 +1,8 @@
 package iti.intake40.covistics.view.adapters
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +12,11 @@ import iti.intake40.covistics.R
 import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
 
-class CountryStatsAdapter() :
+class CountryStatsAdapter(val context: Context) :
     RecyclerView.Adapter<CountryStatsAdapter.ViewHolder>() {
 
     var countriesList: List<SingleCountryStats> = ArrayList()
+    var isSubscribed: Boolean = false
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
 
@@ -30,7 +34,7 @@ class CountryStatsAdapter() :
         holder.itemView.new_cases_tv.text = countriesList.get(position).newCases
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
-        //val countryCode = CountryCodes.getCode(countriesList.get(position).countryName)
+
         val flagUrl = "https://www.countryflags.io/".plus("us").plus("/shiny/64.png")
         Glide.with(holder.itemView)
             .load(flagUrl)
@@ -38,6 +42,32 @@ class CountryStatsAdapter() :
             .placeholder(R.drawable.ic_egypt_flag)
             .into(holder.itemView.flag_iv)
 
+        holder.itemView.subscribe_fab.setOnClickListener(View.OnClickListener {
+            Log.d(
+                "TAG",
+                countriesList.get(position).countryName
+            )
+
+            if (isSubscribed) {
+                holder.itemView.subscribe_fab.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        context.resources.getColor(
+                            R.color.death_color
+                        )
+                    )
+                )
+                isSubscribed = false
+            } else {
+                holder.itemView.subscribe_fab.setBackgroundTintList(
+                    ColorStateList.valueOf(
+                        context.resources.getColor(
+                            android.R.color.transparent
+                        )
+                    )
+                )
+                isSubscribed = true
+            }
+        })
     }
 
     fun setCountryData(data: List<SingleCountryStats>) {

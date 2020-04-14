@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val countryStatsList = ArrayList<SingleCountryStats>()
         recycler_view.layoutManager = LinearLayoutManager(applicationContext)
-        val adapter = CountryStatsAdapter()
+        val adapter = CountryStatsAdapter(this)
         recycler_view.adapter = adapter
         viewModel.getAllCountryStats(this)
         viewModel.liveCountryStats.observe(this, Observer {
