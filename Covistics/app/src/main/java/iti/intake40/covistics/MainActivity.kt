@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val countryStatsList = ArrayList<SingleCountryStats>()
         recycler_view.layoutManager = LinearLayoutManager(applicationContext)
