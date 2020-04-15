@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import iti.intake40.covistics.core.CovidNotification
 import iti.intake40.covistics.data.RepositoryImpl
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.database.CountryRoomDatabase
@@ -16,7 +17,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
-
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
         RepositoryImpl.init(dao,getApplication())
@@ -47,6 +47,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             Log.d("Eqality","EQUAL")
         }else{
             Log.d("Eqality","NOT EQUAL")
+            CovidNotification.pushNotification(getApplication())
         }
     }
+
 }
