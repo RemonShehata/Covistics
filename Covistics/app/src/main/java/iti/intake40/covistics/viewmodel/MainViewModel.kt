@@ -19,7 +19,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
-        RepositoryImpl.init(dao,getApplication())
+        RepositoryImpl.init(dao, getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
     }
 

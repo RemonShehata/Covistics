@@ -20,6 +20,55 @@
     <string name="treatment">Treatment</string>
     <string name="statistics">Statistics</string>
 
+    <!-- Symptoms-->
+    <string name="symptoms_body1">People may be sick with the virus for 1 to 14 days before developing symptoms.
+        The most common symptoms of coronavirus disease (COVID-19) are fever, tiredness, and dry cough.
+        Most people (about 80%) recover from the disease without needing special treatment.</string>
+
+    <string name="symptoms_body2">More rarely, the disease can be serious and even fatal.
+        Older people, and people with other medical conditions (such as asthma, diabetes,
+        or heart disease), may be more vulnerable to becoming severely ill.</string>
+
+    <string name="symptoms_body3">People may experience:\n\n
+                                \u2022 cough.\n\n
+                                \u2022 fever.\n\n
+                                \u2022 tiredness.\n\n
+                                \u2022 difficulty breathing (severe cases).</string>
+
+    <!-- prevention-->
+    <string name="stay_home"><b>STAY HOME</b>. SAVE LIVES.</string>
+    <string name="stop_corona">Help stop coronavirus</string>
+    <string name="stay"><![CDATA[<b><font color=#D50000>1  STAY</b> home as much as you can</font>]]></string>
+    <string name="keep"><![CDATA[<b><font color=#D50000>2  KEEP</b> a safe distance</font>]]></string>
+    <string name="wash"><![CDATA[<b><font color=#D50000>3  WASH</b> your hands often</font>]]></string>
+    <string name="cover"><![CDATA[<b><font color=#D50000>4  COVER</b> your cough</font>]]></string>
+    <string name="sick"><![CDATA[<b><font color=#D50000>5  SICK?</b> Call ahead</font>]]></string>
+    <string name="more_info">More Info</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+
+
+    <!-- treatments-->
+    <string name="treatment_body1">There is no specific medicine to prevent or treat coronavirus
+        disease (COVID-19). People may need supportive care to help them breathe.</string>
+    <string name="treatment_body2">Self care\n\n
+    If you have mild symptoms, stay at home until you’ve recovered.
+        You can relieve your symptoms if you:\n\n
+        \u2022 rest and sleep\n
+        \u2022 keep warm\n
+        \u2022 drink plenty of liquids\n
+        \u2022 use a room humidifier or take a hot shower to help ease a sore throat and cough
+</string>
+    <string name="treatment_body3">Medical treatments\n\n
+        If you develop a fever, cough, and have difficulty breathing, promptly seek medical care.
+        Call in advance and tell your health provider of any recent travel or recent contact with travelers
+</string>
+
+    <!-- overview-->
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

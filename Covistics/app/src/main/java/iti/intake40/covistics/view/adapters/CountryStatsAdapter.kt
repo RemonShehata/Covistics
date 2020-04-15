@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 import iti.intake40.covistics.R
 import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
@@ -35,12 +36,18 @@ class CountryStatsAdapter(val context: Context) :
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
 
-        val flagUrl = "https://www.countryflags.io/".plus("us").plus("/shiny/64.png")
-        Glide.with(holder.itemView)
-            .load(flagUrl)
-            .centerCrop()
-            .placeholder(R.drawable.ic_egypt_flag)
-            .into(holder.itemView.flag_iv)
+        val pathString =
+            "flags/".plus((countriesList.get(position).countryName).toLowerCase()).plus(".png")
+        val ref = FirebaseStorage.getInstance().reference.child(pathString)
+        Log.d("adapter", pathString)
+        ref.downloadUrl.addOnSuccessListener {
+            Glide.with(context)
+                .load(it)
+                .centerCrop()
+                .placeholder(R.drawable.ic_refresh)
+                .into(holder.itemView.flag_iv)
+        }
+
 
         holder.itemView.subscribe_fab.setOnClickListener(View.OnClickListener {
             Log.d(
