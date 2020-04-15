@@ -5,6 +5,7 @@ import iti.intake40.covistics.data.model.SingleCountryStats
 
 interface Repository {
     fun getDataFromAPI()
+    fun getSubscribedCountryDataFromAPI()
     fun getDataFromDatabase(lifecycleOwner: LifecycleOwner)
     fun getCountriesData(lifecycleOwner: LifecycleOwner)
 }

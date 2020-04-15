@@ -13,7 +13,6 @@ class CovidDataWorker(context: Context, workerParams: WorkerParameters) : Worker
     workerParams
 ) {
     private val TAG = "RepositoryImpl"
-    val dao = CountryRoomDatabase.getDatabase(context).countryDao()
 
     override fun doWork(): Result {
         Log.d(TAG, "WorkManager")
