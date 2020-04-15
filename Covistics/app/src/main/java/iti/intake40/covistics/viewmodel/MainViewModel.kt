@@ -1,7 +1,6 @@
 package iti.intake40.covistics.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -18,7 +17,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
-        RepositoryImpl.init(dao,getApplication())
+        RepositoryImpl.init(dao, getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
     }
 
