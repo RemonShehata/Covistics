@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="32dp"
-    app:cardBackgroundColor="#BCCCE0"
-    app:cardCornerRadius="16dp"
+    android:layout_marginTop="1dp"
+    android:elevation="64dp"
+    app:cardCornerRadius="32dp"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
     app:contentPadding="8dp">
@@ -16,41 +15,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/flag_iv"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
-            android:scaleType="centerCrop"
+            android:src="@drawable/ic_egypt_flag"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_egypt_flag"
-            tools:srcCompat="@drawable/ic_egypt_flag" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/country_tv"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="none"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
+            android:maxWidth="100dp"
             android:maxLines="2"
             android:scrollHorizontally="false"
+            android:text="@string/egypt"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/flag_iv"
             app:layout_constraintStart_toStartOf="@+id/flag_iv"
             app:layout_constraintTop_toBottomOf="@+id/flag_iv"
-            tools:text="@string/egypt" />
+            tools:text="long cuntry name here" />
 
         <TextView
             android:id="@+id/confirmed_tv"
             style="@style/circle_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/purple_circle"
+            android:background="@drawable/confirmed_cases_circle"
             android:gravity="center"
-            android:textColor="@color/purpleCircle"
+            android:textColor="@color/confirmed_color"
             app:layout_constraintEnd_toEndOf="@+id/confirmed_cases_lbl"
             app:layout_constraintStart_toStartOf="@+id/confirmed_cases_lbl"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,10 +65,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/green_circle"
+            android:background="@drawable/recovered_cases_circle"
             android:gravity="center"
             android:shadowColor="#FFFFFF"
-            android:textColor="@color/greenCircle"
+            android:textColor="@color/recovered_color"
             app:layout_constraintEnd_toEndOf="@+id/recovered_cases_lbl"
             app:layout_constraintStart_toStartOf="@+id/recovered_cases_lbl"
             app:layout_constraintTop_toBottomOf="@+id/new_cases_lbl"
@@ -77,9 +80,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/red_circle"
+            android:background="@drawable/death_cases_circle"
             android:gravity="center"
-            android:textColor="@color/redCircle"
+            android:textColor="@color/death_color"
             app:layout_constraintEnd_toEndOf="@+id/death_cases_lbl"
             app:layout_constraintStart_toStartOf="@+id/death_cases_lbl"
             app:layout_constraintTop_toBottomOf="@+id/confirmed_cases_lbl"
@@ -89,20 +92,22 @@
             android:id="@+id/new_cases_lbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
             android:text="@string/new_cases"
-            app:layout_constraintStart_toEndOf="@+id/flag_iv"
+            android:textColor="@color/new_cases_color"
+            app:layout_constraintEnd_toStartOf="@+id/confirmed_cases_lbl"
             app:layout_constraintTop_toBottomOf="@+id/new_cases_tv" />
 
         <TextView
             android:id="@+id/recovered_cases_lbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/recovered_cases"
-            app:layout_constraintStart_toEndOf="@+id/flag_iv"
+            android:textColor="@color/recovered_color"
+            app:layout_constraintEnd_toEndOf="@+id/new_cases_lbl"
+            app:layout_constraintStart_toStartOf="@+id/new_cases_lbl"
             app:layout_constraintTop_toBottomOf="@+id/recovered_tv" />
 
         <TextView
@@ -110,19 +115,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:text="@string/death_cases"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/recovered_cases_lbl"
+            android:textColor="@color/death_color"
+            app:layout_constraintEnd_toEndOf="@+id/confirmed_cases_lbl"
+            app:layout_constraintStart_toStartOf="@+id/confirmed_cases_lbl"
             app:layout_constraintTop_toBottomOf="@+id/deaths_tv" />
 
         <TextView
             android:id="@+id/confirmed_cases_lbl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
             android:text="@string/confirmed_cases"
+            android:textColor="@color/confirmed_color"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/new_cases_lbl"
             app:layout_constraintTop_toTopOf="@+id/new_cases_lbl" />
 
         <TextView
@@ -130,26 +136,31 @@
             style="@style/circle_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/purple_circle"
+            android:background="@drawable/new_cases_circle"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="@color/purpleCircle"
+            android:textColor="@color/new_cases_color"
             app:layout_constraintEnd_toEndOf="@+id/new_cases_lbl"
             app:layout_constraintStart_toStartOf="@+id/new_cases_lbl"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="5555" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/subscribe_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="0dp"
+            android:src="@drawable/ic_bell"
+            app:backgroundTint="@android:color/transparent"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="@+id/flag_iv"
+            app:layout_constraintStart_toStartOf="@+id/flag_iv"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_bell" />
+            app:maxImageSize="40dp"
+            app:rippleColor="@null" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

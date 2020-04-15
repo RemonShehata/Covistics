@@ -10,4 +10,16 @@
     <string name="recovered_cases">Recovered Cases</string>
     <string name="death_cases">Death Cases</string>
     <string name="subscribe">Subscribe</string>
+
+    <!-- Nav drawer Strings-->
+    <string name="navigation_drawer_open">open navigation drawer</string>
+    <string name="navigation_drawer_close">close navigation drawer</string>
+    <string name="overview">Overview</string>
+    <string name="symptoms">Symptoms</string>
+    <string name="prevention">Prevention</string>
+    <string name="treatment">Treatment</string>
+    <string name="statistics">Statistics</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

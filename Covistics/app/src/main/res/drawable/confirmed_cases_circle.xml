@@ -9,6 +9,6 @@
         android:height="@dimen/circle_diemn" />
     <stroke
         android:width="@dimen/stroke_width"
-        android:color="@color/greenCircle" />
+        android:color="@color/confirmed_color" />
 
 </shape>
