@@ -8,6 +8,7 @@ class Base : Application() {
     private val WORK_REQUEST_NAME = "COVID_UPDATE"
     override fun onCreate() {
         super.onCreate()
+        CovidNotification.init(applicationContext)
         val updateRequest =  PeriodicWorkRequest.Builder(CovidDataWorker::class.java,15,
             TimeUnit.MINUTES)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())

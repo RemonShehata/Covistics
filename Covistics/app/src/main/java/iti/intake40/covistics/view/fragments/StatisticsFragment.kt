@@ -39,6 +39,7 @@ class StatisticsFragment : Fragment() {
         val adapter = CountryStatsAdapter(this.context!!)
         recycler_view.adapter = adapter
         viewModel.getAllCountryStats(this)
+        viewModel.getSubscribedCountryStat(this)
         viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {
             // update UI
             //TODo sort here

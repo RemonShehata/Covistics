@@ -38,16 +38,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
-        val oldSubscribedCountryData = SubscribedCountryData("Egypt", "2,350", "160", "1,583",
+        val oldSubscribedCountryData = SubscribedCountryData("Egypt", "2,351", "160", "1,583",
                                     "178", "14", "589", "", null, "23")
 //        val newSubscribedCountryData = SubscribedCountryData("Egypt", "200", "15", "150",
 //            "250", "14", "350", "", "", "")
 
-        if(oldSubscribedCountryData == newSubscribedCountryData){
+        if(oldSubscribedCountryData.cases == newSubscribedCountryData.cases && oldSubscribedCountryData.deaths == newSubscribedCountryData.deaths && oldSubscribedCountryData.totalRecovered == newSubscribedCountryData.totalRecovered){
             Log.d("Eqality","EQUAL")
         }else{
             Log.d("Eqality","NOT EQUAL")
-            CovidNotification.pushNotification(getApplication())
+            CovidNotification.pushNotification(newSubscribedCountryData)
         }
     }
 
