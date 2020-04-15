@@ -20,6 +20,26 @@
     <string name="treatment">Treatment</string>
     <string name="statistics">Statistics</string>
 
+    <!-- Symptoms-->
+    <string name="symptoms_body"></string>
+
+    <!-- prevention-->
+    <string name="stay_home"><b>STAY HOME</b>. SAVE LIVES.</string>
+    <string name="stop_corona">Help stop coronavirus</string>
+    <string name="stay"><![CDATA[<b><font color=#D50000>1  STAY</b> home as much as you can</font>]]></string>
+    <string name="keep"><![CDATA[<b><font color=#D50000>2  KEEP</b> a safe distance</font>]]></string>
+    <string name="wash"><![CDATA[<b><font color=#D50000>3  WASH</b> your hands often</font>]]></string>
+    <string name="cover"><![CDATA[<b><font color=#D50000>4  COVER</b> your cough</font>]]></string>
+    <string name="sick"><![CDATA[<b><font color=#D50000>5  SICK?</b> Call ahead</font>]]></string>
+    <string name="more_info">More Info</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <!-- treatments-->
+    <!-- overview-->
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
