@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1062434585641",
+    "firebase_url": "https://covistics.firebaseio.com",
+    "project_id": "covistics",
+    "storage_bucket": "covistics.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062434585641:android:dae126d2628a1ab2977038",
+        "android_client_info": {
+          "package_name": "iti.intake40.covistics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062434585641-51kg0bfdf48i9mlcjc1urpd45ghoo3ao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "iti.intake40.covistics",
+            "certificate_hash": "0b441e8dcf8b00a99b8c598b5c740ae84c6113b4"
+          }
+        },
+        {
+          "client_id": "1062434585641-k3pckf348339bse9kckdhcbrackp9jlv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6pYLrl2uBNqRvEaMifeGIjZdRrcurFog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062434585641-k3pckf348339bse9kckdhcbrackp9jlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
