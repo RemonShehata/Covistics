@@ -27,6 +27,7 @@ object RepositoryImpl :Repository{
     val liveSingleCountriesStatData: MutableLiveData<List<SingleCountryStats>> =
         MutableLiveData<List<SingleCountryStats>>()
     val liveSubscribedCountryData : MutableLiveData<SubscribedCountryData> = MutableLiveData<SubscribedCountryData>()
+    val liveSharedPreferencesData : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
 
      fun init(dao:CountryDAO,context: Context){
         this.dao = dao
@@ -91,6 +92,25 @@ object RepositoryImpl :Repository{
         } else {
             getDataFromDatabase(lifecycleOwner)
         }
+    }
+
+    override fun getSharedPreferencesData(){
+        val sharedPreferencesData = ArrayList<String>()
+        sharedPreferencesData.add(CovidSharedPreferences.isCountrySubscribed.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.countryName.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.cases.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.deaths.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.recovered.toString())
+        liveSharedPreferencesData.postValue(sharedPreferencesData)
+    }
+
+    override fun setSharedPreferencesData(isCountrySubscribed:Boolean,countryName:String?,cases:String?,deaths:String?,recovered:String?) {
+        CovidSharedPreferences.isCountrySubscribed = isCountrySubscribed
+        CovidSharedPreferences.countryName = countryName
+        CovidSharedPreferences.cases = cases
+        CovidSharedPreferences.deaths = deaths
+        CovidSharedPreferences.recovered = recovered
+        getSharedPreferencesData()
     }
 
     fun isConnected(): Boolean {

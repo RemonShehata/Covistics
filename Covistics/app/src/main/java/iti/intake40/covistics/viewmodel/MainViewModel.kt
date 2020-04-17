@@ -18,17 +18,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
+    val liveSharedPreferencesData : MutableLiveData<List<String>>
+    var oldSubscribedCountryData : SubscribedCountryData? = null
+
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
         RepositoryImpl.init(dao, getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
+        liveSharedPreferencesData = MutableLiveData<List<String>>()
     }
 
     fun getSubscribedCountryStat(lifecycleOwner: LifecycleOwner){
         RepositoryImpl.liveSubscribedCountryData.observe(lifecycleOwner, Observer {
             onSubsrcibedCountryUpdate(it)
         })
-       // RepositoryImpl.getSubscribedCountryDataFromAPI()
     }
 
     fun getAllCountryStats(lifecycleOwner: LifecycleOwner) {
@@ -38,28 +41,29 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         RepositoryImpl.getCountriesData(lifecycleOwner)
     }
 
-    fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
-        val oldSubscribedCountryData = SubscribedCountryData(CovidSharedPreferences.countryName, CovidSharedPreferences.cases, "", "", CovidSharedPreferences.deaths, "",CovidSharedPreferences.recovered, "", null, "")
+    fun getSharedPreferencesData(lifecycleOwner: LifecycleOwner){
+        RepositoryImpl.liveSharedPreferencesData.observe(lifecycleOwner, Observer {
+            liveSharedPreferencesData.postValue(it)
+            oldSubscribedCountryData = SubscribedCountryData(it[1], it[2], "", "", it[3], "",it[4], "", null, "")
+        })
+        RepositoryImpl.getSharedPreferencesData()
+    }
 
-        if(oldSubscribedCountryData.cases.equals(newSubscribedCountryData.cases) && oldSubscribedCountryData.deaths.equals(newSubscribedCountryData.deaths) && oldSubscribedCountryData.totalRecovered.equals(newSubscribedCountryData.totalRecovered)){
-            Log.d("Eqality","EQUAL")
-        }else{
-            Log.d("Eqality","NOT EQUAL")
-            Log.d("Shared",CovidSharedPreferences.isCountrySubscribed.toString())
-            Log.d("Shared",CovidSharedPreferences.countryName.toString())
-            Log.d("Shared",CovidSharedPreferences.cases.toString())
-            Log.d("Shared",CovidSharedPreferences.deaths.toString())
-            Log.d("Shared",CovidSharedPreferences.recovered.toString())
-            updateSubscribedCounrtyPreferences(newSubscribedCountryData)
+    fun setSharedPreferencesData(isCountrySubscribed:Boolean,countryName:String?){
+        RepositoryImpl.setSharedPreferencesData(isCountrySubscribed,countryName,null,null,null)
+    }
+
+    fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
+
+        if(!(oldSubscribedCountryData?.cases.equals(newSubscribedCountryData.cases) &&
+                    oldSubscribedCountryData?.deaths.equals(newSubscribedCountryData.deaths) &&
+                    oldSubscribedCountryData?.totalRecovered.equals(newSubscribedCountryData.totalRecovered))){
+            RepositoryImpl.setSharedPreferencesData(true,
+                                                    newSubscribedCountryData.countryName,
+                                                    newSubscribedCountryData.cases,
+                                                    newSubscribedCountryData.deaths,
+                                                    newSubscribedCountryData.totalRecovered)
             CovidNotification.pushNotification(newSubscribedCountryData)
         }
     }
-
-    private fun updateSubscribedCounrtyPreferences(newSubscribedCountryData: SubscribedCountryData){
-        CovidSharedPreferences.countryName = newSubscribedCountryData.countryName
-        CovidSharedPreferences.cases = newSubscribedCountryData.cases
-        CovidSharedPreferences.deaths = newSubscribedCountryData.deaths
-        CovidSharedPreferences.recovered = newSubscribedCountryData.totalRecovered
-    }
-
 }

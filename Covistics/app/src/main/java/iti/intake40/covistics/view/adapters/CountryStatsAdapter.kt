@@ -9,21 +9,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import iti.intake40.covistics.R
 import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.model.SingleCountryStats
+import iti.intake40.covistics.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.country_stats_item.view.*
 
-class CountryStatsAdapter(val context: Context) :
+class CountryStatsAdapter(val context: Context, val viewModel: MainViewModel,val lifecycleOwner: LifecycleOwner) :
     RecyclerView.Adapter<CountryStatsAdapter.ViewHolder>() {
 
     var countriesList: List<SingleCountryStats> = ArrayList()
-    var isSubscribed: Boolean = CovidSharedPreferences.isCountrySubscribed
-    var countryName: String? = CovidSharedPreferences.countryName
+    var isSubscribed: Boolean = false
+    var countryName: String? = null
 
+    init {
+      viewModel.getSharedPreferencesData(lifecycleOwner)
+      viewModel.liveSharedPreferencesData.observe(lifecycleOwner, Observer {
+          isSubscribed = it[0].toBoolean()
+          countryName =  it[1]
+          notifyDataSetChanged()
+      })
+    }
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
 
@@ -87,24 +98,18 @@ class CountryStatsAdapter(val context: Context) :
                             )
                         )
                     )
-                    CovidSharedPreferences.isCountrySubscribed = false
-                    CovidSharedPreferences.countryName = null
-                    isSubscribed = CovidSharedPreferences.isCountrySubscribed
-                    countryName = CovidSharedPreferences.countryName
+                    viewModel.setSharedPreferencesData(false,null)
                 }else{
                     val alertBuilder = androidx.appcompat.app.AlertDialog.Builder(context)
                         .setTitle("Alert!!")
                         .setMessage("You are already subscribed to ${countryName}, Do you want to subscribe to ${countriesList.get(position).countryName}")
                         .setNegativeButton("Yes"){dialogInterface, which ->
-                            CovidSharedPreferences.countryName = countriesList.get(position).countryName
-                            countryName = CovidSharedPreferences.countryName
-                            notifyDataSetChanged()
+                            viewModel.setSharedPreferencesData(true,countriesList.get(position).countryName)
                         }
                         .setPositiveButton("Cancel"){dialogInterface, which -> }
                     val alertDialog : androidx.appcompat.app.AlertDialog = alertBuilder.create()
                     alertDialog.show()
                 }
-
             }else {
                 holder.itemView.subscribe_fab.setBackgroundTintList(
                     ColorStateList.valueOf(

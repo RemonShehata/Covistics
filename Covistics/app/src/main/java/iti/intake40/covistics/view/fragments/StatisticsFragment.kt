@@ -38,7 +38,7 @@ class StatisticsFragment : Fragment() {
         val countryStatsList = ArrayList<SingleCountryStats>()
 
         recycler_view.layoutManager = LinearLayoutManager(this.context)
-        val adapter = CountryStatsAdapter(this.context!!)
+        val adapter = CountryStatsAdapter(this.context!!,viewModel,this)
         recycler_view.adapter = adapter
         viewModel.getAllCountryStats(this)
         viewModel.getSubscribedCountryStat(this)
