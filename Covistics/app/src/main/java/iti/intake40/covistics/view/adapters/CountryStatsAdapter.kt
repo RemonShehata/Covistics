@@ -35,11 +35,13 @@ class CountryStatsAdapter(val context: Context) :
         holder.itemView.new_cases_tv.text = countriesList.get(position).newCases
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
-
+        holder.itemView.flag_iv.setImageResource(R.drawable.ic_refresh)
+            
         val pathString =
             "flags/".plus((countriesList.get(position).countryName).toLowerCase()).plus(".png")
         val ref = FirebaseStorage.getInstance().reference.child(pathString)
         Log.d("adapter", pathString)
+
         ref.downloadUrl.addOnSuccessListener {
             Glide.with(context)
                 .load(it)
