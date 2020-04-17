@@ -1,11 +1,14 @@
 package iti.intake40.covistics.view.adapters
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
@@ -89,9 +92,19 @@ class CountryStatsAdapter(val context: Context) :
                     isSubscribed = CovidSharedPreferences.isCountrySubscribed
                     countryName = CovidSharedPreferences.countryName
                 }else{
-                    print("bla")
-                    //TODO Alert Dialog
+                    val alertBuilder = androidx.appcompat.app.AlertDialog.Builder(context)
+                        .setTitle("Alert!!")
+                        .setMessage("You are already subscribed to ${countryName}, Do you want to subscribe to ${countriesList.get(position).countryName}")
+                        .setNegativeButton("Yes"){dialogInterface, which ->
+                            CovidSharedPreferences.countryName = countriesList.get(position).countryName
+                            countryName = CovidSharedPreferences.countryName
+                            notifyDataSetChanged()
+                        }
+                        .setPositiveButton("Cancel"){dialogInterface, which -> }
+                    val alertDialog : androidx.appcompat.app.AlertDialog = alertBuilder.create()
+                    alertDialog.show()
                 }
+
             }else {
                 holder.itemView.subscribe_fab.setBackgroundTintList(
                     ColorStateList.valueOf(
