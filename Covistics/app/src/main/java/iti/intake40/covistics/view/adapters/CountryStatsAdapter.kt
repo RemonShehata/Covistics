@@ -84,7 +84,6 @@ class CountryStatsAdapter(
             Glide.with(context)
                 .load(it)
                 .centerCrop()
-                .placeholder(R.drawable.ic_refresh)
                 .into(holder.itemView.flag_iv)
         }
 
