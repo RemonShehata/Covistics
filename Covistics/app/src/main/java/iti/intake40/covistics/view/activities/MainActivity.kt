@@ -76,10 +76,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ).commit()
                 toolbar.setTitle(R.string.statistics)
             }
+
+            R.id.nav_settings -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(
+                        fragment_container.id,
+                        SettingsFragment()
+                    ).commit()
+                toolbar.setTitle(R.string.settings)
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    /*
+     @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+     */
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun setUpDrawer() {
