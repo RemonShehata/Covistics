@@ -23,7 +23,7 @@
             android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/ic_egypt_flag"
+            android:src="@drawable/ic_refresh"
             app:civ_border_color="#FF000000"
             app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"

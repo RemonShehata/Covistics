@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import iti.intake40.covistics.R
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.model.SingleCountryStats
 import kotlinx.android.synthetic.main.country_stats_item.view.*
 
@@ -17,7 +18,9 @@ class CountryStatsAdapter(val context: Context) :
     RecyclerView.Adapter<CountryStatsAdapter.ViewHolder>() {
 
     var countriesList: List<SingleCountryStats> = ArrayList()
-    var isSubscribed: Boolean = false
+    var isSubscribed: Boolean = CovidSharedPreferences.isCountrySubscribed
+    var countryName: String? = CovidSharedPreferences.countryName
+
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item)
 
@@ -35,6 +38,23 @@ class CountryStatsAdapter(val context: Context) :
         holder.itemView.new_cases_tv.text = countriesList.get(position).newCases
         holder.itemView.recovered_tv.text = countriesList.get(position).totalRecovered
         holder.itemView.deaths_tv.text = countriesList.get(position).deaths
+        if (countriesList.get(position).countryName == countryName){
+            holder.itemView.subscribe_fab.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    context.resources.getColor(
+                        R.color.death_color
+                    )
+                )
+            )
+        }else{
+            holder.itemView.subscribe_fab.setBackgroundTintList(
+                ColorStateList.valueOf(
+                    context.resources.getColor(
+                        android.R.color.transparent
+                    )
+                )
+            )
+        }
 
         val pathString =
             "flags/".plus((countriesList.get(position).countryName).toLowerCase()).plus(".png")
@@ -55,7 +75,24 @@ class CountryStatsAdapter(val context: Context) :
                 countriesList.get(position).countryName
             )
 
-            if (isSubscribed) {
+            if(isSubscribed){
+                if(countriesList.get(position).countryName.equals(countryName)){
+                    holder.itemView.subscribe_fab.setBackgroundTintList(
+                        ColorStateList.valueOf(
+                            context.resources.getColor(
+                                android.R.color.transparent
+                            )
+                        )
+                    )
+                    CovidSharedPreferences.isCountrySubscribed = false
+                    CovidSharedPreferences.countryName = null
+                    isSubscribed = CovidSharedPreferences.isCountrySubscribed
+                    countryName = CovidSharedPreferences.countryName
+                }else{
+                    print("bla")
+                    //TODO Alert Dialog
+                }
+            }else {
                 holder.itemView.subscribe_fab.setBackgroundTintList(
                     ColorStateList.valueOf(
                         context.resources.getColor(
@@ -63,16 +100,10 @@ class CountryStatsAdapter(val context: Context) :
                         )
                     )
                 )
-                isSubscribed = false
-            } else {
-                holder.itemView.subscribe_fab.setBackgroundTintList(
-                    ColorStateList.valueOf(
-                        context.resources.getColor(
-                            android.R.color.transparent
-                        )
-                    )
-                )
-                isSubscribed = true
+                CovidSharedPreferences.isCountrySubscribed = true
+                CovidSharedPreferences.countryName = countriesList.get(position).countryName
+                isSubscribed = CovidSharedPreferences.isCountrySubscribed
+                countryName = CovidSharedPreferences.countryName
             }
         })
     }

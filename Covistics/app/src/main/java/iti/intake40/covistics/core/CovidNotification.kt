@@ -43,7 +43,7 @@ object CovidNotification {
     private fun createNotification(countryData: SubscribedCountryData){
         val notification = NotificationCompat.Builder(context,channelId)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle("Egypt")
+                    .setContentTitle(countryData.countryName)
                     .setStyle(NotificationCompat.BigTextStyle().bigText("Confirmed cases: ${countryData.cases}\nTotal recovered: ${countryData.totalRecovered}\nTotal deaths: ${countryData.deaths}"))
                     .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
                     .setAutoCancel(true)

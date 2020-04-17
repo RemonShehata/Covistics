@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import iti.intake40.covistics.core.CovidNotification
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.RepositoryImpl
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.database.CountryRoomDatabase
@@ -27,7 +28,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         RepositoryImpl.liveSubscribedCountryData.observe(lifecycleOwner, Observer {
             onSubsrcibedCountryUpdate(it)
         })
-        RepositoryImpl.getSubscribedCountryDataFromAPI()
+       // RepositoryImpl.getSubscribedCountryDataFromAPI()
     }
 
     fun getAllCountryStats(lifecycleOwner: LifecycleOwner) {
@@ -38,17 +39,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
-        val oldSubscribedCountryData = SubscribedCountryData("Egypt", "2,351", "160", "1,583",
-                                    "178", "14", "589", "", null, "23")
-//        val newSubscribedCountryData = SubscribedCountryData("Egypt", "200", "15", "150",
-//            "250", "14", "350", "", "", "")
+        val oldSubscribedCountryData = SubscribedCountryData(CovidSharedPreferences.countryName, CovidSharedPreferences.cases, "", "", CovidSharedPreferences.deaths, "",CovidSharedPreferences.recovered, "", null, "")
 
-        if(oldSubscribedCountryData.cases == newSubscribedCountryData.cases && oldSubscribedCountryData.deaths == newSubscribedCountryData.deaths && oldSubscribedCountryData.totalRecovered == newSubscribedCountryData.totalRecovered){
+        if(oldSubscribedCountryData.cases.equals(newSubscribedCountryData.cases) && oldSubscribedCountryData.deaths.equals(newSubscribedCountryData.deaths) && oldSubscribedCountryData.totalRecovered.equals(newSubscribedCountryData.totalRecovered)){
             Log.d("Eqality","EQUAL")
         }else{
             Log.d("Eqality","NOT EQUAL")
+            Log.d("Shared",CovidSharedPreferences.isCountrySubscribed.toString())
+            Log.d("Shared",CovidSharedPreferences.countryName.toString())
+            Log.d("Shared",CovidSharedPreferences.cases.toString())
+            Log.d("Shared",CovidSharedPreferences.deaths.toString())
+            Log.d("Shared",CovidSharedPreferences.recovered.toString())
+            updateSubscribedCounrtyPreferences(newSubscribedCountryData)
             CovidNotification.pushNotification(newSubscribedCountryData)
         }
+    }
+
+    private fun updateSubscribedCounrtyPreferences(newSubscribedCountryData: SubscribedCountryData){
+        CovidSharedPreferences.countryName = newSubscribedCountryData.countryName
+        CovidSharedPreferences.cases = newSubscribedCountryData.cases
+        CovidSharedPreferences.deaths = newSubscribedCountryData.deaths
+        CovidSharedPreferences.recovered = newSubscribedCountryData.totalRecovered
     }
 
 }

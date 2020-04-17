@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
@@ -40,8 +41,13 @@ object RepositoryImpl :Repository{
                 call: Call<CountryStats>,
                 response: Response<CountryStats>
             ) {
+
+                if(CovidSharedPreferences.isCountrySubscribed){
+                    getSubscribedCountryDataFromAPI()
+            }
                 //add the list from api to my list
                 liveSingleCountriesStatData.postValue(response.body()?.countriesStat)
+
                 //insert api results in sqllite
                 response.body()?.countriesStat?.let { insert(it) }
             }
@@ -53,8 +59,8 @@ object RepositoryImpl :Repository{
 
     }
 
-    override fun getSubscribedCountryDataFromAPI(){
-        val call = ApiClient.getClient.getSubscribedCountryStat("Egypt")
+     private fun getSubscribedCountryDataFromAPI(){
+        val call = ApiClient.getClient.getSubscribedCountryStat(CovidSharedPreferences.countryName)
         call.enqueue(object :Callback<SubscribedCountryStat>{
             override fun onResponse(
                 call: Call<SubscribedCountryStat>,
