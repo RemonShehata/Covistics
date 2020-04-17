@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
 import iti.intake40.covistics.data.model.SingleCountryStats
@@ -26,6 +27,7 @@ object RepositoryImpl :Repository{
     val liveSingleCountriesStatData: MutableLiveData<List<SingleCountryStats>> =
         MutableLiveData<List<SingleCountryStats>>()
     val liveSubscribedCountryData : MutableLiveData<SubscribedCountryData> = MutableLiveData<SubscribedCountryData>()
+    val liveSharedPreferencesData : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
 
      fun init(dao:CountryDAO,context: Context){
         this.dao = dao
@@ -40,8 +42,13 @@ object RepositoryImpl :Repository{
                 call: Call<CountryStats>,
                 response: Response<CountryStats>
             ) {
+
+                if(CovidSharedPreferences.isCountrySubscribed){
+                    getSubscribedCountryDataFromAPI()
+            }
                 //add the list from api to my list
                 liveSingleCountriesStatData.postValue(response.body()?.countriesStat)
+
                 //insert api results in sqllite
                 response.body()?.countriesStat?.let { insert(it) }
             }
@@ -53,8 +60,8 @@ object RepositoryImpl :Repository{
 
     }
 
-    override fun getSubscribedCountryDataFromAPI(){
-        val call = ApiClient.getClient.getSubscribedCountryStat("Egypt")
+     private fun getSubscribedCountryDataFromAPI(){
+        val call = ApiClient.getClient.getSubscribedCountryStat(CovidSharedPreferences.countryName)
         call.enqueue(object :Callback<SubscribedCountryStat>{
             override fun onResponse(
                 call: Call<SubscribedCountryStat>,
@@ -85,6 +92,25 @@ object RepositoryImpl :Repository{
         } else {
             getDataFromDatabase(lifecycleOwner)
         }
+    }
+
+    override fun getSharedPreferencesData(){
+        val sharedPreferencesData = ArrayList<String>()
+        sharedPreferencesData.add(CovidSharedPreferences.isCountrySubscribed.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.countryName.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.cases.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.deaths.toString())
+        sharedPreferencesData.add(CovidSharedPreferences.recovered.toString())
+        liveSharedPreferencesData.postValue(sharedPreferencesData)
+    }
+
+    override fun setSharedPreferencesData(isCountrySubscribed:Boolean,countryName:String?,cases:String?,deaths:String?,recovered:String?) {
+        CovidSharedPreferences.isCountrySubscribed = isCountrySubscribed
+        CovidSharedPreferences.countryName = countryName
+        CovidSharedPreferences.cases = cases
+        CovidSharedPreferences.deaths = deaths
+        CovidSharedPreferences.recovered = recovered
+        getSharedPreferencesData()
     }
 
     fun isConnected(): Boolean {

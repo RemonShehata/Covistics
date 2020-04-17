@@ -12,7 +12,7 @@ data class SubscribedCountryStat (
     var countryLastestStat : List<SubscribedCountryData>
 )
 
-data class SubscribedCountryData(
+data class  SubscribedCountryData(
     @SerializedName("country_name")
     @Expose
     var countryName : String?,

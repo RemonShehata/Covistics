@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import iti.intake40.covistics.core.CovidNotification
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.RepositoryImpl
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.database.CountryRoomDatabase
@@ -17,17 +18,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
+    val liveSharedPreferencesData : MutableLiveData<List<String>>
+    var oldSubscribedCountryData : SubscribedCountryData? = null
+
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
         RepositoryImpl.init(dao, getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
+        liveSharedPreferencesData = MutableLiveData<List<String>>()
     }
 
     fun getSubscribedCountryStat(lifecycleOwner: LifecycleOwner){
         RepositoryImpl.liveSubscribedCountryData.observe(lifecycleOwner, Observer {
             onSubsrcibedCountryUpdate(it)
+            Log.d("Subscribed", it.toString())
         })
-        RepositoryImpl.getSubscribedCountryDataFromAPI()
     }
 
     fun getAllCountryStats(lifecycleOwner: LifecycleOwner) {
@@ -37,18 +42,45 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         RepositoryImpl.getCountriesData(lifecycleOwner)
     }
 
-    fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
-        val oldSubscribedCountryData = SubscribedCountryData("Egypt", "2,351", "160", "1,583",
-                                    "178", "14", "589", "", null, "23")
-//        val newSubscribedCountryData = SubscribedCountryData("Egypt", "200", "15", "150",
-//            "250", "14", "350", "", "", "")
-
-        if(oldSubscribedCountryData.cases == newSubscribedCountryData.cases && oldSubscribedCountryData.deaths == newSubscribedCountryData.deaths && oldSubscribedCountryData.totalRecovered == newSubscribedCountryData.totalRecovered){
-            Log.d("Eqality","EQUAL")
-        }else{
-            Log.d("Eqality","NOT EQUAL")
-            CovidNotification.pushNotification(newSubscribedCountryData)
-        }
+    fun getSharedPreferencesData(lifecycleOwner: LifecycleOwner){
+        RepositoryImpl.liveSharedPreferencesData.observe(lifecycleOwner, Observer {
+            liveSharedPreferencesData.postValue(it)
+            oldSubscribedCountryData = SubscribedCountryData(it[1], it[2], "", "", it[3], "",it[4], "", null, "")
+        })
+        RepositoryImpl.getSharedPreferencesData()
     }
 
+    fun setSharedPreferencesData(isCountrySubscribed:Boolean,countryName:String?){
+        RepositoryImpl.setSharedPreferencesData(isCountrySubscribed,countryName,null,null,null)
+    }
+
+    fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
+        var newCases = 0
+        var newDeaths = 0
+        var newRecovered = 0
+        if(!(oldSubscribedCountryData?.cases.equals(newSubscribedCountryData.cases) &&
+                    oldSubscribedCountryData?.deaths.equals(newSubscribedCountryData.deaths) &&
+                    oldSubscribedCountryData?.totalRecovered.equals(newSubscribedCountryData.totalRecovered))){
+
+            if (!(oldSubscribedCountryData?.cases.isNullOrEmpty()
+                && oldSubscribedCountryData?.deaths.isNullOrEmpty()
+                && oldSubscribedCountryData?.totalRecovered.isNullOrEmpty())){
+                  newCases  = newSubscribedCountryData.cases?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.cases?.replace(",","")?.toInt()!!
+
+                  newDeaths = newSubscribedCountryData.deaths?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.deaths?.replace(",","")?.toInt()!!
+
+                  newRecovered = newSubscribedCountryData.totalRecovered?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.totalRecovered?.replace(",","")?.toInt()!!
+            }
+
+            RepositoryImpl.setSharedPreferencesData(true,
+                                                    newSubscribedCountryData.countryName,
+                                                    newSubscribedCountryData.cases,
+                                                    newSubscribedCountryData.deaths,
+                                                    newSubscribedCountryData.totalRecovered)
+            CovidNotification.pushNotification(newSubscribedCountryData,newCases,newDeaths,newRecovered)
+        }
+    }
 }
