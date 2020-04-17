@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import iti.intake40.covistics.R
+import iti.intake40.covistics.core.Base
 import iti.intake40.covistics.data.model.SingleCountryStats
 import iti.intake40.covistics.view.adapters.CountryStatsAdapter
 import iti.intake40.covistics.viewmodel.MainViewModel
@@ -25,6 +26,7 @@ class StatisticsFragment : Fragment() {
 
     private val data = MutableLiveData<List<SingleCountryStats>>()
     private val TAG = "StatisticsFragment"
+    private var isSwipped = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +38,22 @@ class StatisticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val countryStatsList = ArrayList<SingleCountryStats>()
-
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         val adapter = CountryStatsAdapter(this.context!!,viewModel,this)
         recycler_view.adapter = adapter
-        viewModel.getAllCountryStats(this)
-        viewModel.getSubscribedCountryStat(this)
-        viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {
-            // update UI
-            //TODo sort here
-            adapter?.setCountryData(it)
-            Log.d(TAG, it.toString())
-            Log.d(TAG, viewModel.liveCountryStats.value.toString())
-        })
+        if(!isSwipped){
+            Base.enqueuePeriodicWorker(15)
+            viewModel.getAllCountryStats(this)
+            viewModel.getSubscribedCountryStat(this)
+            viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {
+                // update UI
+                //TODo sort here
+                adapter?.setCountryData(it)
+                Log.d(TAG, it.toString())
+                Log.d(TAG, viewModel.liveCountryStats.value.toString())
+                isSwipped = false
+            })
+        }
 
         //** Set the colors of the Pull To Refresh View
         swipeContainer.setProgressBackgroundColorSchemeColor(
@@ -65,6 +70,7 @@ class StatisticsFragment : Fragment() {
             viewModel.getAllCountryStats(this)
             adapter.notifyDataSetChanged()
             swipeContainer.isRefreshing = false
+            isSwipped = true
         }
     }
 

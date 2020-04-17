@@ -31,6 +31,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getSubscribedCountryStat(lifecycleOwner: LifecycleOwner){
         RepositoryImpl.liveSubscribedCountryData.observe(lifecycleOwner, Observer {
             onSubsrcibedCountryUpdate(it)
+            Log.d("Subscribed", it.toString())
         })
     }
 
@@ -54,16 +55,32 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun onSubsrcibedCountryUpdate(newSubscribedCountryData: SubscribedCountryData){
-
+        var newCases = 0
+        var newDeaths = 0
+        var newRecovered = 0
         if(!(oldSubscribedCountryData?.cases.equals(newSubscribedCountryData.cases) &&
                     oldSubscribedCountryData?.deaths.equals(newSubscribedCountryData.deaths) &&
                     oldSubscribedCountryData?.totalRecovered.equals(newSubscribedCountryData.totalRecovered))){
+
+            if (!(oldSubscribedCountryData?.cases.isNullOrEmpty()
+                && oldSubscribedCountryData?.deaths.isNullOrEmpty()
+                && oldSubscribedCountryData?.totalRecovered.isNullOrEmpty())){
+                  newCases  = newSubscribedCountryData.cases?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.cases?.replace(",","")?.toInt()!!
+
+                  newDeaths = newSubscribedCountryData.deaths?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.deaths?.replace(",","")?.toInt()!!
+
+                  newRecovered = newSubscribedCountryData.totalRecovered?.replace(",","")?.toInt()!!
+                - oldSubscribedCountryData?.totalRecovered?.replace(",","")?.toInt()!!
+            }
+
             RepositoryImpl.setSharedPreferencesData(true,
                                                     newSubscribedCountryData.countryName,
                                                     newSubscribedCountryData.cases,
                                                     newSubscribedCountryData.deaths,
                                                     newSubscribedCountryData.totalRecovered)
-            CovidNotification.pushNotification(newSubscribedCountryData)
+            CovidNotification.pushNotification(newSubscribedCountryData,newCases,newDeaths,newRecovered)
         }
     }
 }

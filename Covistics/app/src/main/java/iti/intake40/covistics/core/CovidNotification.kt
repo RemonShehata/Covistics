@@ -23,11 +23,11 @@ object CovidNotification {
         channelId = "${context.packageName}-${CHANNEL_NAME}"
     }
 
-    fun pushNotification(countryData: SubscribedCountryData){
+    fun pushNotification(countryData:SubscribedCountryData,newCases:Int,newDeaths:Int,newRecovered:Int){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             createNotficationChannel()
         }
-        createNotification(countryData)
+        createNotification(countryData,newCases,newDeaths,newRecovered)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -40,11 +40,13 @@ object CovidNotification {
             notificationManager.createNotificationChannel(channel)
     }
 
-    private fun createNotification(countryData: SubscribedCountryData){
+    private fun createNotification(countryData:SubscribedCountryData,newCases:Int,newDeaths:Int,newRecovered: Int){
         val notification = NotificationCompat.Builder(context,channelId)
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentTitle(countryData.countryName)
-                    .setStyle(NotificationCompat.BigTextStyle().bigText("Confirmed cases: ${countryData.cases}\nTotal recovered: ${countryData.totalRecovered}\nTotal deaths: ${countryData.deaths}"))
+                    .setStyle(NotificationCompat.BigTextStyle().bigText("Total Cases: ${countryData.cases} New Cases: ${newCases}\n" +
+                                                                             "Total deaths: ${countryData.deaths} New Deaths: ${newDeaths}\n" +
+                                                                              "Total Recovered: ${countryData.totalRecovered} New Recovered: ${newRecovered}"))
                     .setPriority(NotificationManager.IMPORTANCE_DEFAULT)
                     .setAutoCancel(true)
                     .build()

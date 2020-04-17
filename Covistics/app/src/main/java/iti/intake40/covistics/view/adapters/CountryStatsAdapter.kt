@@ -118,10 +118,7 @@ class CountryStatsAdapter(val context: Context, val viewModel: MainViewModel,val
                         )
                     )
                 )
-                CovidSharedPreferences.isCountrySubscribed = true
-                CovidSharedPreferences.countryName = countriesList.get(position).countryName
-                isSubscribed = CovidSharedPreferences.isCountrySubscribed
-                countryName = CovidSharedPreferences.countryName
+                viewModel.setSharedPreferencesData(true,countriesList.get(position).countryName)
             }
         })
     }
