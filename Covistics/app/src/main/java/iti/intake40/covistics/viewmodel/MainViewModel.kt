@@ -93,12 +93,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 newRecovered
             )
         }
-            RepositoryImpl.setSharedPreferencesData(true,
-                                                    newSubscribedCountryData.countryName,
-                                                    newSubscribedCountryData.cases,
-                                                    newSubscribedCountryData.deaths,
-                                                    newSubscribedCountryData.totalRecovered)
-
-            CovidNotification.pushNotification(newSubscribedCountryData,newCases,newDeaths,newRecovered)
     }
 }
