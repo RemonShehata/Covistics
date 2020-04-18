@@ -17,8 +17,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
-    val liveSharedPreferencesData: MutableLiveData<List<String>>
-    var oldSubscribedCountryData: SubscribedCountryData? = null
+    val liveSharedPreferencesData : MutableLiveData<List<String>>
+    var oldSubscribedCountryData : SubscribedCountryData? = null
 
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
@@ -60,11 +60,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         var newCases = 0
         var newDeaths = 0
         var newRecovered = 0
+
         if (!(oldSubscribedCountryData?.cases.equals(newSubscribedCountryData.cases) &&
                     oldSubscribedCountryData?.deaths.equals(newSubscribedCountryData.deaths) &&
                     oldSubscribedCountryData?.totalRecovered.equals(newSubscribedCountryData.totalRecovered))
         ) {
-
             if (!(oldSubscribedCountryData?.cases.isNullOrEmpty()
                         && oldSubscribedCountryData?.deaths.isNullOrEmpty()
                         && oldSubscribedCountryData?.totalRecovered.isNullOrEmpty())
@@ -93,5 +93,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 newRecovered
             )
         }
+            RepositoryImpl.setSharedPreferencesData(true,
+                                                    newSubscribedCountryData.countryName,
+                                                    newSubscribedCountryData.cases,
+                                                    newSubscribedCountryData.deaths,
+                                                    newSubscribedCountryData.totalRecovered)
+
+            CovidNotification.pushNotification(newSubscribedCountryData,newCases,newDeaths,newRecovered)
     }
 }
