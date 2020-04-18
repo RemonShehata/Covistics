@@ -29,10 +29,10 @@
         Older people, and people with other medical conditions (such as asthma, diabetes,
         or heart disease), may be more vulnerable to becoming severely ill.</string>
 
-    <string name="symptoms_body3">People may experience:\n\n
-                                \u2022 cough.\n\n
-                                \u2022 fever.\n\n
-                                \u2022 tiredness.\n\n
+    <string name="symptoms_body3">People may experience:\n
+                                \u2022 cough.\n
+                                \u2022 fever.\n
+                                \u2022 tiredness.\n
                                 \u2022 difficulty breathing (severe cases).</string>
 
     <!-- prevention-->
