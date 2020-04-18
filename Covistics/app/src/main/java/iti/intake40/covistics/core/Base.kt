@@ -10,10 +10,11 @@ class Base : Application() {
         CovidSharedPreferences.init(applicationContext)
         CovidNotification.init(applicationContext)
     }
-    companion object{
+
+    companion object {
         private val WORK_REQUEST_NAME = "COVID_UPDATE"
 
-        fun enqueuePeriodicWorker(updateInterval : Long){
+        fun enqueuePeriodicWorker(updateInterval: Long) {
             val updateRequest = PeriodicWorkRequest.Builder(
                 CovidDataWorker::class.java, updateInterval,
                 TimeUnit.MINUTES
@@ -29,7 +30,7 @@ class Base : Application() {
             )
         }
 
-        fun cancelPeriodicWorker(){
+        fun cancelPeriodicWorker() {
             val workManager = WorkManager.getInstance()
             workManager.cancelAllWork()
         }

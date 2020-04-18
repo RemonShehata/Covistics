@@ -3,44 +3,44 @@ package iti.intake40.covistics.data.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class SubscribedCountryStat (
+data class SubscribedCountryStat(
     @SerializedName("country")
     @Expose
-    var country : String,
+    var country: String,
     @SerializedName("latest_stat_by_country")
     @Expose
-    var countryLastestStat : List<SubscribedCountryData>
+    var countryLastestStat: List<SubscribedCountryData>
 )
 
-data class  SubscribedCountryData(
+data class SubscribedCountryData(
     @SerializedName("country_name")
     @Expose
-    var countryName : String?,
+    var countryName: String?,
     @SerializedName("total_cases")
     @Expose
-    var cases : String?,
+    var cases: String?,
     @SerializedName("new_cases")
     @Expose
-    var newCases : String?,
+    var newCases: String?,
     @SerializedName("active_cases")
     @Expose
-    var activeCases : String?,
+    var activeCases: String?,
     @SerializedName("total_deaths")
     @Expose
-    var deaths : String?,
+    var deaths: String?,
     @SerializedName("new_deaths")
     @Expose
-    var newDeaths : String?,
+    var newDeaths: String?,
     @SerializedName("total_recovered")
     @Expose
-    var totalRecovered : String?,
+    var totalRecovered: String?,
     @SerializedName("serious_critical")
     @Expose
-    var seriousCritical : String?,
+    var seriousCritical: String?,
     @SerializedName("region")
     @Expose
-    var region : String?,
+    var region: String?,
     @SerializedName("total_cases_per1m")
     @Expose
-    var totalCasesPer1mPopulation : String
+    var totalCasesPer1mPopulation: String
 )

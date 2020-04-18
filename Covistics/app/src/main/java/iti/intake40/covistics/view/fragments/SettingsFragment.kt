@@ -48,7 +48,7 @@ class SettingsFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val s: String = parent?.getItemAtPosition(position) as String
-        Toast.makeText(this.context,s,Toast.LENGTH_SHORT)
+        Toast.makeText(this.context, s, Toast.LENGTH_SHORT)
     }
 
 }

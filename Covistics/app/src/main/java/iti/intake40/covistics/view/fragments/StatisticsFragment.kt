@@ -39,9 +39,9 @@ class StatisticsFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val countryStatsList = ArrayList<SingleCountryStats>()
         recycler_view.layoutManager = LinearLayoutManager(this.context)
-        val adapter = CountryStatsAdapter(this.context!!,viewModel,this)
+        val adapter = CountryStatsAdapter(this.context!!, viewModel, this)
         recycler_view.adapter = adapter
-        if(!isSwipped){
+        if (!isSwipped) {
             Base.enqueuePeriodicWorker(15)
             viewModel.getAllCountryStats(this)
             viewModel.getSubscribedCountryStat(this)

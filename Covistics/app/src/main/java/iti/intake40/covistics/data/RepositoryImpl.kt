@@ -19,17 +19,18 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-object RepositoryImpl :Repository{
+object RepositoryImpl : Repository {
 
     private val TAG = "RepositoryImpl"
-    private lateinit var dao : CountryDAO
-    private lateinit var context : Context
+    private lateinit var dao: CountryDAO
+    private lateinit var context: Context
     val liveSingleCountriesStatData: MutableLiveData<List<SingleCountryStats>> =
         MutableLiveData<List<SingleCountryStats>>()
-    val liveSubscribedCountryData : MutableLiveData<SubscribedCountryData> = MutableLiveData<SubscribedCountryData>()
-    val liveSharedPreferencesData : MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    val liveSubscribedCountryData: MutableLiveData<SubscribedCountryData> =
+        MutableLiveData<SubscribedCountryData>()
+    val liveSharedPreferencesData: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
 
-     fun init(dao:CountryDAO,context: Context){
+    fun init(dao: CountryDAO, context: Context) {
         this.dao = dao
         this.context = context
     }
@@ -43,9 +44,9 @@ object RepositoryImpl :Repository{
                 response: Response<CountryStats>
             ) {
 
-                if(CovidSharedPreferences.isCountrySubscribed){
+                if (CovidSharedPreferences.isCountrySubscribed) {
                     getSubscribedCountryDataFromAPI()
-            }
+                }
                 //add the list from api to my list
                 liveSingleCountriesStatData.postValue(response.body()?.countriesStat)
 
@@ -60,25 +61,25 @@ object RepositoryImpl :Repository{
 
     }
 
-     private fun getSubscribedCountryDataFromAPI(){
+    private fun getSubscribedCountryDataFromAPI() {
         val call = ApiClient.getClient.getSubscribedCountryStat(CovidSharedPreferences.countryName)
-        call.enqueue(object :Callback<SubscribedCountryStat>{
+        call.enqueue(object : Callback<SubscribedCountryStat> {
             override fun onResponse(
                 call: Call<SubscribedCountryStat>,
                 response: Response<SubscribedCountryStat>
             ) {
-               liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
+                liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
             }
 
             override fun onFailure(call: Call<SubscribedCountryStat>, t: Throwable) {
-                Log.e(TAG,t.toString())
+                Log.e(TAG, t.toString())
             }
         })
     }
 
     override fun getDataFromDatabase(lifecycleOwner: LifecycleOwner) {
         dao.getAllCountries().observe(lifecycleOwner, Observer {
-            Log.d(TAG,it.toString())
+            Log.d(TAG, it.toString())
             liveSingleCountriesStatData.postValue(it)
         })
 //        liveData = dao.getAllCountries()
@@ -94,7 +95,7 @@ object RepositoryImpl :Repository{
         }
     }
 
-    override fun getSharedPreferencesData(){
+    override fun getSharedPreferencesData() {
         val sharedPreferencesData = ArrayList<String>()
         sharedPreferencesData.add(CovidSharedPreferences.isCountrySubscribed.toString())
         sharedPreferencesData.add(CovidSharedPreferences.countryName.toString())
@@ -104,7 +105,13 @@ object RepositoryImpl :Repository{
         liveSharedPreferencesData.postValue(sharedPreferencesData)
     }
 
-    override fun setSharedPreferencesData(isCountrySubscribed:Boolean,countryName:String?,cases:String?,deaths:String?,recovered:String?) {
+    override fun setSharedPreferencesData(
+        isCountrySubscribed: Boolean,
+        countryName: String?,
+        cases: String?,
+        deaths: String?,
+        recovered: String?
+    ) {
         CovidSharedPreferences.isCountrySubscribed = isCountrySubscribed
         CovidSharedPreferences.countryName = countryName
         CovidSharedPreferences.cases = cases
