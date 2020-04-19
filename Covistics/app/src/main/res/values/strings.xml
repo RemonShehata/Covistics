@@ -29,10 +29,10 @@
         Older people, and people with other medical conditions (such as asthma, diabetes,
         or heart disease), may be more vulnerable to becoming severely ill.</string>
 
-    <string name="symptoms_body3">People may experience:\n\n
-                                \u2022 cough.\n\n
-                                \u2022 fever.\n\n
-                                \u2022 tiredness.\n\n
+    <string name="symptoms_body3">People may experience:\n
+                                \u2022 cough.\n
+                                \u2022 fever.\n
+                                \u2022 tiredness.\n
                                 \u2022 difficulty breathing (severe cases).</string>
 
     <!-- prevention-->
@@ -54,15 +54,15 @@
     <!-- treatments-->
     <string name="treatment_body1">There is no specific medicine to prevent or treat coronavirus
         disease (COVID-19). People may need supportive care to help them breathe.</string>
-    <string name="treatment_body2">Self care\n\n
+    <string name="treatment_body2">Self care:\n
     If you have mild symptoms, stay at home until you’ve recovered.
-        You can relieve your symptoms if you:\n\n
-        \u2022 rest and sleep\n
-        \u2022 keep warm\n
-        \u2022 drink plenty of liquids\n
-        \u2022 use a room humidifier or take a hot shower to help ease a sore throat and cough
+        You can relieve your symptoms if you:\n
+        \u2022 rest and sleep.\n
+        \u2022 keep warm.\n
+        \u2022 drink plenty of liquids.\n
+        \u2022 use a room humidifier or take a hot shower to help ease a sore throat and cough.
 </string>
-    <string name="treatment_body3">Medical treatments\n\n
+    <string name="treatment_body3">Medical treatments:\n
         If you develop a fever, cough, and have difficulty breathing, promptly seek medical care.
         Call in advance and tell your health provider of any recent travel or recent contact with travelers
 </string>
