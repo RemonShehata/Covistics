@@ -1,5 +1,6 @@
 package iti.intake40.covistics.core
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -34,6 +35,13 @@ object CovidNotification {
         createNotification(countryData, newCases, newDeaths, newRecovered)
     }
 
+    fun serviceNotification() : Notification{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotficationChannel()
+        }
+        return createServiceNotification()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotficationChannel() {
         val channel =
@@ -66,5 +74,14 @@ object CovidNotification {
             .build()
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(0, notification)
+    }
+
+    fun createServiceNotification() : Notification{
+        val notification = NotificationCompat.Builder(context, channelId)
+            .setContentTitle("Updating Subscribed country data")
+            .setPriority(NotificationManager.IMPORTANCE_LOW)
+            .setAutoCancel(true)
+            .build()
+        return notification
     }
 }

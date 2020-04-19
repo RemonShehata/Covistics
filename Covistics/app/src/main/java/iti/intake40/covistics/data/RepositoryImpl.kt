@@ -4,9 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import iti.intake40.covistics.core.CovidNotification
 import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.model.CountryStats
@@ -29,6 +31,10 @@ object RepositoryImpl : Repository {
     val liveSubscribedCountryData: MutableLiveData<SubscribedCountryData> =
         MutableLiveData<SubscribedCountryData>()
     val liveSharedPreferencesData: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+
+    fun init(dao: CountryDAO){
+        this.dao = dao
+    }
 
     fun init(dao: CountryDAO, context: Context) {
         this.dao = dao
@@ -68,6 +74,7 @@ object RepositoryImpl : Repository {
                 call: Call<SubscribedCountryStat>,
                 response: Response<SubscribedCountryStat>
             ) {
+                Toast.makeText(context,"WorkManger",Toast.LENGTH_LONG).show()
                 liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
             }
 
