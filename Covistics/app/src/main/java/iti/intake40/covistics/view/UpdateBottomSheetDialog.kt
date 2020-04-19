@@ -1,4 +1,4 @@
-package iti
+package iti.intake40.covistics.view
 
 import android.content.Context
 import android.os.Bundle
@@ -14,7 +14,7 @@ class UpdateBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
     }
 
     override fun onCreateView(

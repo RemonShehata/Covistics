@@ -8,7 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import iti.UpdateBottomSheetDialog
+import iti.intake40.covistics.view.UpdateBottomSheetDialog
 import iti.intake40.covistics.R
 import iti.intake40.covistics.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*

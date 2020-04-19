@@ -33,7 +33,7 @@ class CovidDataWorker(context: Context, workerParams: WorkerParameters) : Worker
         RepositoryImpl.getDataFromAPI()
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(Runnable { // Run your task here
-            Toast.makeText(applicationContext, "Testing", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, "Testing", Toast.LENGTH_SHORT).show()
         }, 1000)
 
         return Result.success()
