@@ -11,7 +11,7 @@
 
         <item
             android:id="@+id/nav_symptoms"
-            android:icon="@drawable/coronavirus"
+            android:icon="@drawable/ic_nav_symptoms"
             android:title="@string/symptoms" />
         <item
             android:id="@+id/nav_prevention"
@@ -25,12 +25,12 @@
         <item
             android:id="@+id/nav_statistics"
             android:icon="@drawable/ic_statistics"
-            android:title="@string/statistics" />
+            android:title="@string/countries" />
 
         <item
             android:id="@+id/nav_world"
             android:icon="@drawable/ic_world_data"
-            android:title="World-wide Statistics" />
+            android:title="@string/worldwide" />
         <item
             android:id="@+id/nav_settings"
             android:title="@string/settings" />
