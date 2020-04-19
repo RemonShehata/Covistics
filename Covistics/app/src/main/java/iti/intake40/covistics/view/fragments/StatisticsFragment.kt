@@ -44,7 +44,6 @@ class StatisticsFragment : Fragment() {
         if (!isSwipped) {
             Base.enqueuePeriodicWorker(15)
             viewModel.getAllCountryStats(this)
-            viewModel.getSubscribedCountryStat(this)
             viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {
                 // update UI
                 //TODo sort here
