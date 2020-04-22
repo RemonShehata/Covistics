@@ -76,7 +76,7 @@ object CovidNotification {
         notificationManager.notify(0, notification)
     }
 
-    fun createServiceNotification() : Notification{
+    private fun createServiceNotification() : Notification{
         val notification = NotificationCompat.Builder(context, channelId)
             .setContentTitle("Updating Subscribed country data")
             .setPriority(NotificationManager.IMPORTANCE_LOW)

@@ -75,7 +75,7 @@ object RepositoryImpl : Repository {
                 response: Response<SubscribedCountryStat>
             ) {
                 Toast.makeText(context,"WorkManger",Toast.LENGTH_LONG).show()
-                liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
+                liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0)?.get(0))
             }
 
             override fun onFailure(call: Call<SubscribedCountryStat>, t: Throwable) {

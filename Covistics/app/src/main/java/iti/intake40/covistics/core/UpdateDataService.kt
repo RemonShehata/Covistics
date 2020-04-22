@@ -21,7 +21,7 @@ class UpdateDataService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
-        startForeground(1,CovidNotification.createServiceNotification())
+        startForeground(1,CovidNotification.serviceNotification())
         Log.d("Service","Done")
         val dao = CountryRoomDatabase.getDatabase(this.applicationContext).countryDao()
         RepositoryImpl.init(dao,this.applicationContext)
@@ -52,14 +52,11 @@ class UpdateDataService : LifecycleService() {
                         && oldSubscribedCountryData?.deaths.isNullOrEmpty()
                         && oldSubscribedCountryData?.totalRecovered.isNullOrEmpty())
             ) {
-                newCases = newSubscribedCountryData.cases?.replace(",", "")?.toInt()!!
-                -oldSubscribedCountryData?.cases?.replace(",", "")?.toInt()!!
+                newCases = newSubscribedCountryData.cases?.replace(",", "")?.toInt()!!  - oldSubscribedCountryData?.cases?.replace(",", "")?.toInt()!!
 
-                newDeaths = newSubscribedCountryData.deaths?.replace(",", "")?.toInt()!!
-                -oldSubscribedCountryData?.deaths?.replace(",", "")?.toInt()!!
+                newDeaths = newSubscribedCountryData.deaths?.replace(",", "")?.toInt()!! - oldSubscribedCountryData?.deaths?.replace(",", "")?.toInt()!!
 
-                newRecovered = newSubscribedCountryData.totalRecovered?.replace(",", "")?.toInt()!!
-                -oldSubscribedCountryData?.totalRecovered?.replace(",", "")?.toInt()!!
+                newRecovered = newSubscribedCountryData.totalRecovered?.replace(",", "")?.toInt()!! - oldSubscribedCountryData?.totalRecovered?.replace(",", "")?.toInt()!!
             }
 
             RepositoryImpl.setSharedPreferencesData(

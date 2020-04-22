@@ -9,7 +9,7 @@ data class SubscribedCountryStat(
     var country: String,
     @SerializedName("latest_stat_by_country")
     @Expose
-    var countryLastestStat: List<SubscribedCountryData>
+    var countryLastestStat: List<List<SubscribedCountryData>>
 )
 
 data class SubscribedCountryData(

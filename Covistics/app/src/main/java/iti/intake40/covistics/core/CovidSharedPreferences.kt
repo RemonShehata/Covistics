@@ -8,6 +8,7 @@ object CovidSharedPreferences {
     private val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
 
+    private val IS_FIRST_TIME_PREF = Pair("is_first_time",false)
     private val IS_COUNTRY_SUBSCRIBED_PREF = Pair("Is_Country_Subsrcibed", false)
     private val COUNTRY_NAME_PREF = Pair("Country_Name", "")
     private val CASES_PREF = Pair("Cases", "")
@@ -22,6 +23,15 @@ object CovidSharedPreferences {
         val editor = edit()
         operation(editor)
         editor.apply()
+    }
+
+    var isFirstTime : Boolean
+    get() = preferences.getBoolean(
+        IS_FIRST_TIME_PREF.first,
+        IS_FIRST_TIME_PREF.second
+    )
+    set(value) = preferences.edit(){
+        it.putBoolean(IS_FIRST_TIME_PREF.first,value)
     }
 
     var isCountrySubscribed: Boolean

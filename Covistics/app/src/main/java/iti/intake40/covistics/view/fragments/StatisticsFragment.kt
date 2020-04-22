@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import iti.intake40.covistics.R
 import iti.intake40.covistics.core.Base
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.model.SingleCountryStats
 import iti.intake40.covistics.view.adapters.CountryStatsAdapter
 import iti.intake40.covistics.viewmodel.MainViewModel
@@ -41,8 +42,11 @@ class StatisticsFragment : Fragment() {
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         val adapter = CountryStatsAdapter(this.context!!, viewModel, this)
         recycler_view.adapter = adapter
-        if (!isSwipped) {
+        if (!CovidSharedPreferences.isFirstTime){
             Base.enqueuePeriodicWorker(15)
+            CovidSharedPreferences.isFirstTime = true
+        }
+        if (!isSwipped) {
             viewModel.getAllCountryStats(this)
             viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {
                 // update UI
