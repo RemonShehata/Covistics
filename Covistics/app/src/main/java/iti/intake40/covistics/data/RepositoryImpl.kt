@@ -74,7 +74,6 @@ object RepositoryImpl : Repository {
                 call: Call<SubscribedCountryStat>,
                 response: Response<SubscribedCountryStat>
             ) {
-                Toast.makeText(context,"WorkManger",Toast.LENGTH_LONG).show()
                 liveSubscribedCountryData.postValue(response.body()?.countryLastestStat?.get(0))
             }
 

@@ -18,7 +18,8 @@
     <string name="symptoms">Symptoms</string>
     <string name="prevention">Prevention</string>
     <string name="treatment">Treatment</string>
-    <string name="statistics">Statistics</string>
+    <string name="countries">Countries</string>
+    <string name="worldwide">Worldwide</string>
 
     <!-- Symptoms-->
     <string name="symptoms_body1">People may be sick with the virus for 1 to 14 days before developing symptoms.
@@ -71,12 +72,20 @@
 
     <!-- settings -->
     <string name="settings">Settings</string>
-    <string name="update_interval">Select update interval</string>
+    <string name="update_interval">Update frequency</string>
     <string name="apply_changes">Apply Changes</string>
+    <string name="update_frequency">Update frequency</string>
     <string-array name="intervals">
-        <item>1 Hour</item>
-        <item>2 Hours</item>
-        <item>5 Hours</item>
-        <item>24 Hours</item>
+        <item>Every 1 hour</item>
+        <item>Every 2 hours</item>
+        <item>Every 5 hours</item>
+        <item>Every 24 hours</item>
+        <item>Update manually</item>
     </string-array>
+
+    <string name="hour_1">Every 1 hour</string>
+    <string name="hour_2">Every 2 hours</string>
+    <string name="hour_5">Every 5 hours</string>
+    <string name="hour_24">Every 24 hours</string>
+    <string name="update_manually">Update manually</string>
 </resources>

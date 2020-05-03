@@ -1,16 +1,20 @@
 package iti.intake40.covistics.view.activities
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import iti.intake40.covistics.view.UpdateBottomSheetDialog
 import iti.intake40.covistics.R
 import iti.intake40.covistics.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    UpdateBottomSheetDialog.BottomSheetListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         fragment_container.id,
                         StatisticsFragment()
                     ).commit()
-                toolbar.setTitle(R.string.statistics)
+                toolbar.setTitle(R.string.countries)
             }
 
             R.id.nav_settings -> {
@@ -91,16 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    /*
-     @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-     */
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -120,6 +114,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cab_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.update_frequency_item) {
+            val dialog = UpdateBottomSheetDialog()
+            dialog.show(supportFragmentManager, "update_dialog")
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onButtonClicked(interval: Int) {
+        //get the interval here
+        Log.d("main", "interval = $interval")
     }
 
 }
