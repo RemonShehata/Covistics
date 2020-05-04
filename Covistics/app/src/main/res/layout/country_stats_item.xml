@@ -157,6 +157,7 @@
             android:layout_marginTop="16dp"
             android:elevation="0dp"
             android:src="@drawable/ic_bell"
+            android:tint="@color/recovered_color"
             app:backgroundTint="@android:color/transparent"
             app:elevation="0dp"
             app:fabSize="mini"
