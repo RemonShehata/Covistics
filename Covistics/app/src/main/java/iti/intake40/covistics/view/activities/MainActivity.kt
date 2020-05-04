@@ -83,15 +83,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 toolbar.setTitle(R.string.countries)
             }
 
-            R.id.nav_settings -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(
-                        fragment_container.id,
-                        SettingsFragment()
-                    ).commit()
-                toolbar.setTitle(R.string.settings)
-            }
-
             R.id.nav_world -> {
                 supportFragmentManager.beginTransaction()
                     .replace(
