@@ -8,12 +8,13 @@ object CovidSharedPreferences {
     private val MODE = Context.MODE_PRIVATE
     private lateinit var preferences: SharedPreferences
 
-    private val IS_FIRST_TIME_PREF = Pair("is_first_time",false)
+    private val IS_FIRST_TIME_PREF = Pair("Is_First_Time",true)
     private val IS_COUNTRY_SUBSCRIBED_PREF = Pair("Is_Country_Subsrcibed", false)
     private val COUNTRY_NAME_PREF = Pair("Country_Name", "")
     private val CASES_PREF = Pair("Cases", "")
     private val DEATHS_PREF = Pair("Deaths", "")
     private val RECOVERED_PREF = Pair("Recovered", "")
+    private val WORKMANAGER_PERIODIC_PREF = Pair("Periodic_Time",120L)
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
@@ -65,5 +66,11 @@ object CovidSharedPreferences {
         get() = preferences.getString(RECOVERED_PREF.first, RECOVERED_PREF.second)
         set(value) = preferences.edit() {
             it.putString(RECOVERED_PREF.first, value)
+        }
+
+    var periodicTime: Long
+        get() = preferences.getLong(WORKMANAGER_PERIODIC_PREF.first, WORKMANAGER_PERIODIC_PREF.second)
+        set(value) = preferences.edit() {
+            it.putLong(WORKMANAGER_PERIODIC_PREF.first, value)
         }
 }

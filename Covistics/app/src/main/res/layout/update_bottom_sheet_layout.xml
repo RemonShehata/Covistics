@@ -55,11 +55,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hour_24" />
 
-            <RadioButton
-                android:id="@+id/rg_manual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/update_manually" />
         </RadioGroup>
 
     </LinearLayout>

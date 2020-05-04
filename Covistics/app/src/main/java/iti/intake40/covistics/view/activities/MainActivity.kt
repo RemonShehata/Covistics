@@ -10,6 +10,8 @@ import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import iti.intake40.covistics.view.UpdateBottomSheetDialog
 import iti.intake40.covistics.R
+import iti.intake40.covistics.core.Base
+import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -129,10 +131,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onButtonClicked(interval: Int) {
-        //get the interval here
+    override fun onButtonClicked(interval: Long) {
+        Base.cancelPeriodicWorker()
+        Base.enqueuePeriodicWorker(interval)
+        CovidSharedPreferences.periodicTime = interval
         Log.d("main", "interval = $interval")
     }
-
 }
 

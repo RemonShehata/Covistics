@@ -42,10 +42,6 @@ class StatisticsFragment : Fragment() {
         recycler_view.layoutManager = LinearLayoutManager(this.context)
         val adapter = CountryStatsAdapter(this.context!!, viewModel, this)
         recycler_view.adapter = adapter
-        if (!CovidSharedPreferences.isFirstTime){
-            Base.enqueuePeriodicWorker(15)
-            CovidSharedPreferences.isFirstTime = true
-        }
         if (!isSwipped) {
             viewModel.getAllCountryStats(this)
             viewModel.liveCountryStats.observe(viewLifecycleOwner, Observer {

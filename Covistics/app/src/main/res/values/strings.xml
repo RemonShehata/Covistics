@@ -84,8 +84,7 @@
     </string-array>
 
     <string name="hour_1">Every 1 hour</string>
-    <string name="hour_2">Every 2 hours</string>
+    <string name="hour_2">Every 2 hours (default)</string>
     <string name="hour_5">Every 5 hours</string>
     <string name="hour_24">Every 24 hours</string>
-    <string name="update_manually">Update manually</string>
 </resources>

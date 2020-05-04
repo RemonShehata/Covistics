@@ -9,6 +9,10 @@ class Base : Application() {
         super.onCreate()
         CovidSharedPreferences.init(applicationContext)
         CovidNotification.init(applicationContext)
+        if (CovidSharedPreferences.isFirstTime){
+            Base.enqueuePeriodicWorker(2 * 60)
+            CovidSharedPreferences.isFirstTime = false
+        }
     }
 
     companion object {
