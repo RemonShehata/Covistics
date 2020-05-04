@@ -38,15 +38,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_overview -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(
-                        fragment_container.id,
-                        OverviewFragment()
-                    ).commit()
-                toolbar.setTitle(R.string.overview)
-            }
-
             R.id.nav_symptoms -> {
                 supportFragmentManager.beginTransaction()
                     .replace(
