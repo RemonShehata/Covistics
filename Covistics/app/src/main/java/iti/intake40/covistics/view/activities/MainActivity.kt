@@ -91,6 +91,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ).commit()
                 toolbar.setTitle(R.string.settings)
             }
+
+            R.id.nav_world -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(
+                        fragment_container.id,
+                        WorldWideStatFragment()
+                    ).commit()
+                toolbar.setTitle(R.string.worldwide)
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

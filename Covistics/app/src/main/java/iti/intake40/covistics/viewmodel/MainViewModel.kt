@@ -12,18 +12,21 @@ import iti.intake40.covistics.data.database.CountryDAO
 import iti.intake40.covistics.data.database.CountryRoomDatabase
 import iti.intake40.covistics.data.model.SingleCountryStats
 import iti.intake40.covistics.data.model.SubscribedCountryData
+import iti.intake40.covistics.data.model.WorldWideStat
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val dao: CountryDAO
     val liveCountryStats: MutableLiveData<List<SingleCountryStats>>
     val liveSharedPreferencesData : MutableLiveData<List<String>>
+    val liveWorldWideStat : MutableLiveData<WorldWideStat>
 
     init {
         dao = CountryRoomDatabase.getDatabase(application).countryDao()
         RepositoryImpl.init(dao, getApplication())
         liveCountryStats = MutableLiveData<List<SingleCountryStats>>()
         liveSharedPreferencesData = MutableLiveData<List<String>>()
+        liveWorldWideStat = MutableLiveData()
     }
 
     fun getAllCountryStats(lifecycleOwner: LifecycleOwner) {
@@ -46,5 +49,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         RepositoryImpl.setSharedPreferencesData(isCountrySubscribed, countryName, null, null, null)
     }
 
-
+    fun getWorldwideData(lifecycleOwner: LifecycleOwner){
+        RepositoryImpl.liveWorldwideData.observe(lifecycleOwner, Observer {
+            liveWorldWideStat.postValue(it)
+        })
+        RepositoryImpl.getWorldWideData()
+    }
 }

@@ -11,10 +11,7 @@ import androidx.lifecycle.Observer
 import iti.intake40.covistics.core.CovidNotification
 import iti.intake40.covistics.core.CovidSharedPreferences
 import iti.intake40.covistics.data.database.CountryDAO
-import iti.intake40.covistics.data.model.CountryStats
-import iti.intake40.covistics.data.model.SingleCountryStats
-import iti.intake40.covistics.data.model.SubscribedCountryData
-import iti.intake40.covistics.data.model.SubscribedCountryStat
+import iti.intake40.covistics.data.model.*
 import iti.intake40.covistics.data.network.ApiClient
 import kotlinx.coroutines.runBlocking
 import retrofit2.Call
@@ -31,8 +28,9 @@ object RepositoryImpl : Repository {
     val liveSubscribedCountryData: MutableLiveData<SubscribedCountryData> =
         MutableLiveData<SubscribedCountryData>()
     val liveSharedPreferencesData: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    val liveWorldwideData: MutableLiveData<WorldWideStat> = MutableLiveData()
 
-    fun init(dao: CountryDAO){
+    fun init(dao: CountryDAO) {
         this.dao = dao
     }
 
@@ -99,6 +97,22 @@ object RepositoryImpl : Repository {
         } else {
             getDataFromDatabase(lifecycleOwner)
         }
+    }
+
+    override fun getWorldWideData() {
+        val call = ApiClient.getClient.getWorldWideStat()
+        call.enqueue(object : Callback<WorldWideStat> {
+
+            override fun onResponse(call: Call<WorldWideStat>, response: Response<WorldWideStat>) {
+                Log.d("Worldwide", response.body().toString())
+                liveWorldwideData.postValue(response.body())
+            }
+
+            override fun onFailure(call: Call<WorldWideStat>, t: Throwable) {
+                Log.e(TAG, t.toString())
+            }
+
+        })
     }
 
     override fun getSharedPreferencesData() {

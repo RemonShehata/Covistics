@@ -3,19 +3,7 @@ package iti.intake40.covistics.data.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class SubscribedCountryStat(
-    @SerializedName("country")
-    @Expose
-    var country: String,
-    @SerializedName("latest_stat_by_country")
-    @Expose
-    var countryLastestStat: List<SubscribedCountryData>
-)
-
-data class SubscribedCountryData(
-    @SerializedName("country_name")
-    @Expose
-    var countryName: String?,
+data class WorldWideStat (
     @SerializedName("total_cases")
     @Expose
     var cases: String?,
@@ -42,5 +30,8 @@ data class SubscribedCountryData(
     var region: String?,
     @SerializedName("total_cases_per1m")
     @Expose
-    var totalCasesPer1mPopulation: String?
+    var totalCasesPer1mPopulation: String?,
+    @SerializedName("deaths_per_1m_population")
+    @Expose
+    var deathsPer1m: String?
 )

@@ -6,6 +6,7 @@ interface Repository {
     fun getDataFromAPI()
     fun getDataFromDatabase(lifecycleOwner: LifecycleOwner)
     fun getCountriesData(lifecycleOwner: LifecycleOwner)
+    fun getWorldWideData()
     fun getSharedPreferencesData()
     fun setSharedPreferencesData(
         isCountrySubscribed: Boolean,
