@@ -15,7 +15,6 @@ A settings screen will allow user to change the update interval such as (update 
  - Room.
  - Work Manger.
  - Notifications.
- - MySQL Workbench.
  - Firebase Storage.
  - Glide.
  
